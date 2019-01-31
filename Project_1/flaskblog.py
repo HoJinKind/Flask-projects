@@ -1,6 +1,6 @@
 
 import pyrebase
-from flask import Flask , request, jsonify, render_template
+from flask import Flask , request, jsonify, render_template,redirect,url_for
 import pandas as pd
 import firebaseConnect
 
@@ -21,15 +21,21 @@ posts =[
         'quantity':'4'
     }
 ]
-ref=firebaseConnect.firebaseCall()
+ref=str(firebaseConnect.firebaseCall())
 
 app = Flask(__name__)
 
-@app.route("/")
-@app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/home", methods=['GET', 'POST'])
 def hello():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
 
-    return "Hello ! this is our project! please upload your first excel!"+str(ref)
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('upload_file'))
+
+    return render_template("home.html",ref=ref)
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload_file():
