@@ -1,5 +1,4 @@
 
-import pyrebase
 import firebase_admin
 from firebase_admin import credentials,firestore
 
@@ -20,8 +19,6 @@ def firebaseCall():
         "storageBucket": "flasktest-a0a4d.appspot.com",
         "messagingSenderId": "505357466043"
     };
-    firebase = pyrebase.initialize_app(config)
-    auth = firebase.auth()
     dic = doc.to_dict()
     print(dic['comp struc']['prof'])#able to get data from firestore
 
