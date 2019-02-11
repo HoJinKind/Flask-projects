@@ -20,6 +20,4 @@ def firebaseCall():
         "messagingSenderId": "505357466043"
     };
     dic = doc.to_dict()
-    print(dic['comp struc']['prof'])#able to get data from firestore
-
     return "{}".format(doc.to_dict())

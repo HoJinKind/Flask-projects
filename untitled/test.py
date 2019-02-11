@@ -27,7 +27,7 @@ if __name__ == '__main__':
     k = 3
 
     S = [1,7,2,4]
-
+    print([1,2,"dsds"])
     result = nonDivisibleSubset(k, S)
     print(result)
 
