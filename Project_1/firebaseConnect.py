@@ -10,7 +10,7 @@ def firebaseCall():
     doc_ref =dbfs.collection(u'class').document(u'YLOJ8PzfUsz0U2gSundW')
     doc_ref.update({'comp_struc.class.test':True})
     doc =doc_ref.get()
-    
+    print("{}".format(doc.to_dict()))
     config = {
         "apiKey": "AIzaSyCCSwHNk4GoIJjIsE26CxE38-ZikAY5qcc",
         "authDomain": "flasktest-a0a4d.firebaseapp.com",

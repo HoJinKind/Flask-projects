@@ -34,6 +34,8 @@ def hello():
         # the redirect can be to the same route or somewhere else
         return redirect(url_for('upload_file'))
 
+    ref=str(firebaseConnect.firebaseCall())
+    print(ref)
     return render_template("home.html",ref=ref)
 
 @app.route("/upload", methods=['GET', 'POST'])
