@@ -52,13 +52,15 @@ def upload_file():
     </form>
     '''
 
-@app.route("/export", methods=['GET'])
+@app.route("/export", methods=['GET','POST'])
 def export_records():
     return 
 
-@app.route("/about")
+@app.route("/about", methods=['GET','POST'])
 def about():
-    return render_template("about.html",posts=posts)
+
+    return render_template('about.html', title='Login', form=form)
+
 
 
 if __name__ == '__main__':
