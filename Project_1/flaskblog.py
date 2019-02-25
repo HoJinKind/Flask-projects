@@ -24,8 +24,7 @@ ref=str(firebaseConnect.firebaseCall())
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET', 'POST'])
-@app.route("/home", methods=['GET', 'POST'])
+@app.route("/testing", methods=['GET', 'POST'])
 def hello():
     if request.method == 'POST':
         # do stuff when the form is submitted
@@ -36,7 +35,7 @@ def hello():
 
     ref=str(firebaseConnect.firebaseCall())
     print(ref)
-    return render_template("home.html",ref=ref)
+    return render_template("testing.html",ref=ref)
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload_file():
@@ -58,10 +57,10 @@ def upload_file():
 def export_records():
     return 
 
-@app.route("/about", methods=['GET','POST'])
+@app.route("/", methods=['GET','POST'])
 def about():
 
-    return render_template('about.html', title='Login', form=form)
+    return render_template('home.html', title='Home')
 
 
 
