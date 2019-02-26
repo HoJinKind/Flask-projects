@@ -1,7 +1,8 @@
 
-from flask import Flask , request, jsonify, render_template,redirect,url_for
+from flask import Flask , request, jsonify, render_template,redirect,url_for,session
 import pandas as pd
-import firebaseConnect
+import readfromFB
+
 
 posts =[
    {
@@ -20,22 +21,10 @@ posts =[
         'quantity':'4'
     }
 ]
-ref=str(firebaseConnect.firebaseCall())
 
 app = Flask(__name__)
 
-@app.route("/testing", methods=['GET', 'POST'])
-def hello():
-    if request.method == 'POST':
-        # do stuff when the form is submitted
-
-        # redirect to end the POST handling
-        # the redirect can be to the same route or somewhere else
-        return redirect(url_for('upload_file'))
-
-    ref=str(firebaseConnect.firebaseCall())
-    print(ref)
-    return render_template("testing.html",ref=ref)
+app.secret_key = "super secret key"
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload_file():
@@ -58,9 +47,28 @@ def export_records():
     return 
 
 @app.route("/", methods=['GET','POST'])
-def about():
+def login():
+    session['loggedIn']= None
+    if request.method == 'POST':
+        usrname = request.form['username']
+        pd = request.form['pd']
 
+        auth(usrname,pd)
+    if session['loggedIn']== True:
+        return redirect(url_for('home'))
+    
+    return render_template('login.html', title='Log in')
+
+@app.route("/home", methods=['GET','POST'])
+def home():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    
     return render_template('home.html', title='Home')
+
+def auth(username,pd):
+    if readfromFB.auth(username,pd):
+        session['loggedIn']= True
 
 
 

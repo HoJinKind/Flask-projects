@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/login.css') }}" />
   <title>login</title>
 </head>
 <body>
@@ -14,10 +14,10 @@
   <section class="login_form">
   <center>
     <span class="login_text"> Login for course coordinator</span>
-  <form>
-  <p>ID : <input name=id type="text"></p>
-  <p>PW : <input name=password type="password"></p>
-  <input type="button" value="login" onclick="location.href='home.html'"> <!--고쳐야 하는 부분-->
+  <form method="POST">
+  <p>ID : <input name="username" type="text" placeholder="username"></p>
+  <p>PW : <input name="pd" type="password" placeholder="password"></p>
+  <input type="submit" value="login" > <!--고쳐야 하는 부분-->
   </form>
   </center>
 </section>
