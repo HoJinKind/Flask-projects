@@ -2,7 +2,7 @@
 from flask import Flask , request, jsonify, render_template,redirect,url_for,session
 import pandas as pd
 import readfromFB
-
+import generate1
 
 posts =[
    {
@@ -70,7 +70,15 @@ def home():
 def generate():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    
+    if request.method == 'POST':
+            dictionary_day_class_list= generate1.gen()
+            room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
+                                        'tuesday':dictionary_day_class_list['tuesday']['2.506'],
+                                        'wednesday':dictionary_day_class_list['wednesday']['2.506'],
+                                        'thursday':dictionary_day_class_list['thursday']['2.506'],
+                                        'friday':dictionary_day_class_list['friday']['2.506']})
+            return room_example.to_html()
+            #df = pd.DataFrame(np.array(my_list).reshape(3,3), columns = list("abc"))
     return render_template('generate.html', title='Generate')
 
 
