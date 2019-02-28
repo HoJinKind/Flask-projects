@@ -66,9 +66,20 @@ def home():
     
     return render_template('home.html', title='Home')
 
+@app.route("/generate", methods=['GET','POST'])
+def generate():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    
+    return render_template('generate.html', title='Generate')
+
+
 def auth(username,pd):
     if readfromFB.auth(username,pd):
         session['loggedIn']= True
+
+def goToGenerate():
+   redirect(url_for('generate'))
 
 
 
