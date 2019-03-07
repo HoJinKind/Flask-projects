@@ -94,3 +94,23 @@ def goToGenerate():
 if __name__ == '__main__':
     app.run(debug=True,host = '0.0.0.0')
 
+
+@app.route("/modify", methods=['GET','POST'])
+def modify():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('modify.html', title='Modify')
+
+
+@app.route("/constraints", methods=['GET','POST'])
+def constraints():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('constraints.html', title='Constraints')
+
+
+@app.route("/view", methods=['GET','POST'])
+def view():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('view.html', title='View')
