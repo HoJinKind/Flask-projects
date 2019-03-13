@@ -7,6 +7,16 @@ default_app = firebase_admin.initialize_app(cred)
 
 dbfs = firestore.client()
 
+def readfromfbHardConstraints():
+    
+    doc_ref1 = dbfs.collection(u'hard_constraints').document('hass').get().to_dict()
+    doc_ref2 = dbfs.collection(u'hard_constraints').document('generic').get().to_dict()
+    return doc_ref1,doc_ref2
+
+        
+
+def readfromfbProfConstraints():
+    pass
 
 def readfromfb():
     doc_ref = dbfs.collection(u'dummy').get()

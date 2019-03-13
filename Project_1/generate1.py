@@ -1,4 +1,4 @@
-import readfromFB
+import readwritefromFB
 import chromosome
 import copy
 from random import random, choice, randint
@@ -15,14 +15,14 @@ class generate1:
         self.prepareForFirebase()
 
     def prepareForFirebase(self):
-        #transform all session objects to dictiionary
+        #transform all session objects to dictionary
         tempTimeTable= copy.deepcopy(self.rooms_timetable)
         for day in tempTimeTable:
             for room in tempTimeTable[day]:
                 for index in range(len(tempTimeTable[day][room])):
                     if not tempTimeTable[day][room][index] == 'available':
                         tempTimeTable[day][room][index] = vars(tempTimeTable[day][room][index])
-        readfromFB.updateTimetable(tempTimeTable)
+        readwritefromFB.updateTimetable(tempTimeTable)
 
 
     def populate_timetable(self):
@@ -31,9 +31,11 @@ class generate1:
             a=0
             while not fufilled:
                 a+=1
+                #type of room has to be chosen
                 tempRoom=self.findRandomRoom(self.dictOfRooms,session.roomtype)
                 tempStartTime,dayOfWeek=self.findRandomTimeSlot(session.duration)
                 print(tempStartTime,dayOfWeek,fufilled)
+                #this is where the checks are
                 fufilled = (self.check_prof_available(session.duration,
                                                        tempStartTime,
                                                        dayOfWeek,
@@ -76,7 +78,7 @@ class generate1:
             key = choice(list(dict_room))
             if dict_room[key] == room_needed:
                 return key
-
+    #TODO change to earliest timeslot, since picking, have to get latest?
     def findRandomTimeSlot(self,duration):
         #find random timeslot for session
         days=['monday','tuesday','wednesday','thursday','friday']
@@ -118,6 +120,13 @@ class generate1:
     def  check_room_available(self,room,duration,startTime,day):
         #check if for a specific day, time, room is available,m else, run the check for plus minus timing
         #make sure start not too late
+        for i in range(duration):
+            if not self.rooms_timetable[day][room][startTime+i] == 'available':
+                print('room return false')
+                return False
+        print('room return true')
+        return True
+    def check_weekly_constraints(self,duration,startTime):
         for i in range(duration):
             if not self.rooms_timetable[day][room][startTime+i] == 'available':
                 print('room return false')
@@ -214,6 +223,6 @@ class generate1:
 #     print(firstGeneration.rooms_timetable)
 def gen():
     ls_chromosome=chromosome.createSession()
-    room_dict=readfromFB.readfromfbRoom()
+    room_dict=readwritefromFB.readfromfbRoom()
     firstGeneration=generate1(ls_chromosome,room_dict)
     return firstGeneration.rooms_timetable

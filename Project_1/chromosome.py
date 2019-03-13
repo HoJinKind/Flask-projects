@@ -1,4 +1,4 @@
-import readfromFB
+import readwritefromFB
 
 class chromosome:
 
@@ -53,7 +53,7 @@ class session:
                    'subject:',self.subject])
 
 def createSession():
-    doc_ref = readfromFB.readfromfb()
+    doc_ref = readwritefromFB.readfromfb()
     Allsessionslist = []
     ls_of_completed = []
 

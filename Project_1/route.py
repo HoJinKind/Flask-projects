@@ -1,7 +1,7 @@
 
 from flask import Flask , request, jsonify, render_template,redirect,url_for,session
 import pandas as pd
-import readfromFB
+import readwritefromFB
 import generate1
 
 posts =[
@@ -83,7 +83,7 @@ def generate():
 
 
 def auth(username,pd):
-    if readfromFB.auth(username,pd):
+    if readwritefromFB.auth(username,pd):
         session['loggedIn']= True
 
 def goToGenerate():
@@ -91,8 +91,6 @@ def goToGenerate():
 
 
 
-if __name__ == '__main__':
-    app.run(debug=True,host = '0.0.0.0')
 
 
 @app.route("/modify", methods=['GET','POST'])
@@ -114,3 +112,7 @@ def view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     return render_template('view.html', title='View')
+
+    
+if __name__ == '__main__':
+    app.run(debug=True,host = '0.0.0.0')
