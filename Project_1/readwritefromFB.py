@@ -34,6 +34,13 @@ def readfromfbRoom():
     return doc_ref.to_dict()
 
 #readfromfb()
+def readfromfbTimeTable():
+    doc_ref = dbfs.collection(u'timetable').document('finalised').get()
+    
+
+    # for doct in doc_ref:
+    #     print(doct.id,"{}".format(doct.to_dict()))
+    return doc_ref.to_dict()
 
 def updateTimetable(data):
     doc_ref = dbfs.collection(u'timetable').document(u'finalised')

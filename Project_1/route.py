@@ -72,14 +72,17 @@ def generate():
         return redirect(url_for('login'))
     if request.method == 'POST':
             dictionary_day_class_list= generate1.gen()
-            room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
-                                        'tuesday':dictionary_day_class_list['tuesday']['2.506'],
-                                        'wednesday':dictionary_day_class_list['wednesday']['2.506'],
-                                        'thursday':dictionary_day_class_list['thursday']['2.506'],
-                                        'friday':dictionary_day_class_list['friday']['2.506']})
-            return room_example.to_html()
+            
+            return redirect(url_for('view'))
+            # room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
+            #                             'tuesday':dictionary_day_class_list['tuesday']['2.506'],
+            #                             'wednesday':dictionary_day_class_list['wednesday']['2.506'],
+            #                             'thursday':dictionary_day_class_list['thursday']['2.506'],
+            #                             'friday':dictionary_day_class_list['friday']['2.506']})
+            # return room_example.to_html()
             #df = pd.DataFrame(np.array(my_list).reshape(3,3), columns = list("abc"))
     return render_template('generate.html', title='Generate')
+
 
 
 def auth(username,pd):
@@ -111,7 +114,14 @@ def constraints():
 def view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    return render_template('view.html', title='View')
+    dictionary_day_class_list = readwritefromFB.readfromfbTimeTable();
+    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
+                                'tuesday':dictionary_day_class_list['tuesday']['2.506'],
+                                'wednesday':dictionary_day_class_list['wednesday']['2.506'],
+                                'thursday':dictionary_day_class_list['thursday']['2.506'],
+                                'friday':dictionary_day_class_list['friday']['2.506']})
+    room_example_html = room_example.to_html()
+    return render_template('view.html', title='View',room_example=room_example_html)
 
     
 if __name__ == '__main__':
