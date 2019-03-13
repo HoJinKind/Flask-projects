@@ -72,12 +72,8 @@ def generate():
         return redirect(url_for('login'))
     if request.method == 'POST':
             dictionary_day_class_list= generate1.gen()
-            room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
-                                        'tuesday':dictionary_day_class_list['tuesday']['2.506'],
-                                        'wednesday':dictionary_day_class_list['wednesday']['2.506'],
-                                        'thursday':dictionary_day_class_list['thursday']['2.506'],
-                                        'friday':dictionary_day_class_list['friday']['2.506']})
-            return room_example.to_html()
+            room_example=create_pdFrame(dictionary_day_class_list,'2.505')
+            return "<button type='button'>next class</button>"+room_example.to_html()
             #df = pd.DataFrame(np.array(my_list).reshape(3,3), columns = list("abc"))
     return render_template('generate.html', title='Generate')
 
@@ -89,7 +85,13 @@ def auth(username,pd):
 def goToGenerate():
    redirect(url_for('generate'))
 
-
+def create_pdFrame(dictionary_day_class_list,roomID):
+    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday'][roomID],
+                                        'tuesday':dictionary_day_class_list['tuesday'][roomID],
+                                        'wednesday':dictionary_day_class_list['wednesday'][roomID],
+                                        'thursday':dictionary_day_class_list['thursday'][roomID],
+                                        'friday':dictionary_day_class_list['friday'][roomID]})
+    return room_example
 
 if __name__ == '__main__':
     app.run(debug=True,host = '0.0.0.0')
