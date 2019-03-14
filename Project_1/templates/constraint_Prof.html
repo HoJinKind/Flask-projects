@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Prof/ Weekly constraints</title>
+</head>
+<body>
+  <main>
+  <nav>
+   <ul class="nav_menu">
+      <li>
+       <a href="generate" class="menu-tap">
+         <div class="menu-tap_wrap">
+          Generate
+        </div>
+       </a>
+    </li>
+    <li>
+      <a href="modify" class="menu-tap">
+        <div class="menu-tap_wrap">
+          Modify
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="constraints" class="menu-tap menu-tap--selected">
+      <div class="menu-tap_wrap">
+      Constraints
+      </div>
+      </a>
+    </li>
+    <li>
+      <a href="view" class="menu-tap">
+        <div class="menu-tap_wrap">
+          View
+        </div>
+      </a>
+    </li>
+  </ul>
+  </nav>
+  <div class="logo">
+    Constraints
+  </div>
+  <section class="function_modify">
+  <center>
+  <span class="login_text">Add Prof/Weekly Constraint</span>
+  <form>
+    <table>
+      <tr><td>Prof Name</td> <td><select name="prof_name">
+      <option value="-">-
+      <option value="david yau">David yau
+      <option value="ernest">Ernest
+      <option value="gemma">Gemma
+      <option value="natalie">Natalie
+      <option value="sudipta">Sudipta
+      <option value="sun jun">Sun jun
+      <option value="tony">Tony
+      </select></td></tr>
+      <tr><td>Day of Week</td> <td><select name="day_of_week">
+      <option value="-">-
+      <option value="mon">Monday
+      <option value="tue">Tuesday
+      <option value="wed">Wednesday
+      <option value="thu">Thursday
+      <option value="fri">Friday
+      </select></td></tr>
+      <tr><td>Start Time</td><td><input type="time"></td></tr>
+      <tr><td>End Time</td><td><input type="time"></td></tr>
+
+    </table>
+    <input type="submit" value="submit">
+  </form>
+  </center>
+</section>
+  </main>
+
+    <footer>
+      <center>
+        <p class="space_footer"></p>
+      <hr>
+      &copy eGenda 2019
+    </center>
+    </footer>
+</body>
+</html>

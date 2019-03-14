@@ -4,10 +4,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <title>constraints</title>
+  <title>modify</title>
 </head>
 <body>
-<main>
+  <main>
   <nav>
    <ul class="nav_menu">
       <li>
@@ -18,7 +18,7 @@
        </a>
     </li>
     <li>
-      <a href="modify" class="menu-tap">
+      <a href="modify" class="menu-tap menu-tap">
         <div class="menu-tap_wrap">
           Modify
         </div>
@@ -43,24 +43,28 @@
   <div class="logo">
     Constraints
   </div>
-  <section class="functions_constraints">
-    <center>
-    <span class="login_text">Unsolved constraints</span>
-    <br>
-    <br>
-    <form>
-      <input type="button" class="button" value="Prof/Weekly Constraints" onclick="location.href='constraint_Prof'">
-      <input type="button" class="button" value="One Time Constraints" onclick="location.href='constraint_OneTime'">
-    </form>
+  <section class="function_modify">
+  <center>
+  <span class="login_text">Add One Time Constraint</span>
+  <form>
+    <table>
+      <tr><td>Event Name </td> <td><input type="text"></td></tr>
+      <tr><td>Date</td> <td><input type="date"></td></tr>
+      <tr><td>Start Time</td><td><input type="time"></td></tr>
+      <tr><td>End Time</td><td><input type="time"></td></tr>
+    </table>
+    <input type="submit" value="submit"> <!--Just press the button to go to the "home" page.-->
+  </form>
   </center>
- </section>
+</section>
   </main>
-  <footer>
-    <center>
-      <p class="space_footer"></p>
-    <hr>
-    &copy eGenda 2019
-  </center>
-  </footer>
+
+    <footer>
+      <center>
+        <p class="space_footer"></p>
+      <hr>
+      &copy eGenda 2019
+    </center>
+    </footer>
 </body>
 </html>

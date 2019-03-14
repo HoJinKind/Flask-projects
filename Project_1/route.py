@@ -44,7 +44,7 @@ def upload_file():
 
 @app.route("/export", methods=['GET','POST'])
 def export_records():
-    return 
+    return
 
 @app.route("/", methods=['GET','POST'])
 def login():
@@ -56,14 +56,14 @@ def login():
         auth(usrname,pd)
     if session['loggedIn']== True:
         return redirect(url_for('home'))
-    
+
     return render_template('login.html', title='Log in')
 
 @app.route("/home", methods=['GET','POST'])
 def home():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    
+
     return render_template('home.html', title='Home')
 
 @app.route("/generate", methods=['GET','POST'])
@@ -72,7 +72,7 @@ def generate():
         return redirect(url_for('login'))
     if request.method == 'POST':
             dictionary_day_class_list= generate1.gen()
-            
+
             return redirect(url_for('view'))
             # room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
             #                             'tuesday':dictionary_day_class_list['tuesday']['2.506'],
@@ -110,6 +110,20 @@ def constraints():
     return render_template('constraints.html', title='Constraints')
 
 
+@app.route("/constraint_OneTime", methods=['GET','POST'])
+def modify_event():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('constraint_OneTime.html', title='Constraint_OneTime')
+
+@app.route("/constraint_Prof", methods=['GET','POST'])
+def modify_public():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('constraint_Prof.html', title='Constraint_Prof')
+
+
+
 @app.route("/view", methods=['GET','POST'])
 def view():
     if not session['loggedIn']== True:
@@ -123,6 +137,6 @@ def view():
     room_example_html = room_example.to_html()
     return render_template('view.html', title='View',room_example=room_example_html)
 
-    
+
 if __name__ == '__main__':
     app.run(debug=True,host = '0.0.0.0')
