@@ -4,6 +4,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet"  href="{{ url_for('static', filename='css/login.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
   <title>login</title>
 </head>
 <body>
@@ -17,7 +18,7 @@
   <form method="POST">
   <p>ID : <input name="username" type="text" placeholder="username"></p>
   <p>PW : <input name="pd" type="password" placeholder="password"></p>
-  <input type="submit" value="login" > <!--고쳐야 하는 부분-->
+  <input type="submit" value="login" >
   </form>
   </center>
 </section>

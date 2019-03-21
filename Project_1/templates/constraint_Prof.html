@@ -4,14 +4,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <title>generate</title>
+  <title>Prof/ Weekly constraints</title>
 </head>
 <body>
   <main>
   <nav>
    <ul class="nav_menu">
       <li>
-       <a href="generate.html" class="menu-tap menu-tap--selected">
+       <a href="generate" class="menu-tap">
          <div class="menu-tap_wrap">
           Generate
         </div>
@@ -25,7 +25,7 @@
       </a>
     </li>
     <li>
-      <a href="constraints" class="menu-tap">
+      <a href="constraints" class="menu-tap menu-tap--selected">
       <div class="menu-tap_wrap">
       Constraints
       </div>
@@ -41,28 +41,41 @@
   </ul>
   </nav>
   <div class="logo">
-    Generate
+    Constraints
   </div>
-  <section class="function_generate">
+  <section class="function_modify">
   <center>
-  <span class="login_text">Start to generate timetable</span>
-  <br>
-  <br>
-  <br>
+  <span class="login_text">Add Prof/Weekly Constraint</span>
   <form>
-    <p>Choose a pillar</p>
-    <select name="pillar">
-    <option value="-">-
-    <option value="HASS">HASS
-    <option value="ISTD">ISTD</select>
-  </form>
-<br>
-    <form method="POST" >
-      <input type="submit" value="Generate">
+    <table>
+      <tr><td>Prof Name</td> <td><select name="prof_name">
+      <option value="-">-
+      <option value="david yau">David yau
+      <option value="ernest">Ernest
+      <option value="gemma">Gemma
+      <option value="natalie">Natalie
+      <option value="sudipta">Sudipta
+      <option value="sun jun">Sun jun
+      <option value="tony">Tony
+      </select></td></tr>
+      <tr><td>Day of Week</td> <td><select name="day_of_week">
+      <option value="-">-
+      <option value="mon">Monday
+      <option value="tue">Tuesday
+      <option value="wed">Wednesday
+      <option value="thu">Thursday
+      <option value="fri">Friday
+      </select></td></tr>
+      <tr><td>Start Time</td><td><input type="time"></td></tr>
+      <tr><td>End Time</td><td><input type="time"></td></tr>
+
+    </table>
+    <input type="submit" value="submit">
   </form>
   </center>
 </section>
   </main>
+
     <footer>
       <center>
         <p class="space_footer"></p>

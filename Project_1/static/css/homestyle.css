@@ -1,6 +1,4 @@
-main{
-  height: 600px;
-}
+
 .logo{
   font-size: 100px;
   font-weight: bold;
@@ -28,8 +26,7 @@ a.function-tap{
 }
 
 footer{
-  position: relative;
-  width:100%;
+  position: absolute;
   height:150px;
   background-color: #d4d1d1;
 }
