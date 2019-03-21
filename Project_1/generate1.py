@@ -8,7 +8,7 @@ class generate1:
         self.dictOfRooms = dictOfRooms
         self.lsOfSessions = lsOfSessions
 
-        self.nineteentAvail = ['available' for i in range(19)]
+        self.nineteentAvail = [u"available" for i in range(19)]
         self.rooms_timetable={}
         self.generate_rooms_timetable()
         self.populate_timetable()
