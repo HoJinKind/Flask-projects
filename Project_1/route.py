@@ -92,6 +92,13 @@ def auth(username,pd):
 def goToGenerate():
    redirect(url_for('generate'))
 
+def create_pdFrame(dictionary_day_class_list,roomID):
+    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday'][roomID],
+                                        'tuesday':dictionary_day_class_list['tuesday'][roomID],
+                                        'wednesday':dictionary_day_class_list['wednesday'][roomID],
+                                        'thursday':dictionary_day_class_list['thursday'][roomID],
+                                        'friday':dictionary_day_class_list['friday'][roomID]})
+    return room_example
 
 
 
@@ -129,13 +136,34 @@ def view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     dictionary_day_class_list = readwritefromFB.readfromfbTimeTable();
+    
+    #needs triple for loop for day of wk and class, and hr,
+    for day in dictionary_day_class_list.keys():
+        for classroom in dictionary_day_class_list[day].keys():
+            for timeSlot in range(0,19):
+                temp_dict =dictionary_day_class_list[day][classroom][timeSlot]
+
+                if type(temp_dict) == dict :
+                    tempstr= ""
+                    #convert to str, take name
+                    tempstr=tempstr +'cohorts:' +str(temp_dict[u'cohortID'])
+
+                    tempstr=tempstr +'  profs:' +str(temp_dict[u'profs'])
+                    tempstr=tempstr +'  subject:' +str(temp_dict[u'subject'])
+                    dictionary_day_class_list[day][classroom][timeSlot]=tempstr
+             
+
+    pd.set_option('display.max_colwidth', -1)
     room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
                                 'tuesday':dictionary_day_class_list['tuesday']['2.506'],
                                 'wednesday':dictionary_day_class_list['wednesday']['2.506'],
                                 'thursday':dictionary_day_class_list['thursday']['2.506'],
                                 'friday':dictionary_day_class_list['friday']['2.506']})
+    #room_example.rename(index={0:'Adasda'})
     room_example_html = room_example.to_html()
-    return render_template('view.html', title='View',room_example=room_example_html)
+    #need to make a list of them.
+    room_example_html_list = [room_example_html]
+    return render_template('view.html', title='View',room_example=room_example_html_list)
 
 
 if __name__ == '__main__':
