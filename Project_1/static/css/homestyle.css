@@ -4,7 +4,9 @@
   font-weight: bold;
   text-align: center;
 }
-
+.space_logout{
+  height: 45px;
+}
 
 a.function-tap{
   text-decoration: none;
@@ -26,6 +28,7 @@ a.function-tap{
 }
 
 footer{
+  width: 100%;
   position: absolute;
   height:150px;
   background-color: #d4d1d1;
