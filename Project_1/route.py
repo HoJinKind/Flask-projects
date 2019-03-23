@@ -62,11 +62,6 @@ def auth(username,pd):
 def goToGenerate():
    redirect(url_for('generate'))
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 00e1ab293bf3f13e2e942930b15b029fffa2bb6c
 
 
 @app.route("/modify", methods=['GET','POST'])
@@ -120,7 +115,6 @@ def view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     dictionary_day_class_list = readwritefromFB.readfromfbTimeTable();
-<<<<<<< HEAD
     
     #needs triple for loop for day of wk and class, and hr,
     for day in dictionary_day_class_list.keys():
@@ -149,15 +143,6 @@ def view():
     #need to make a list of them.
 
     return render_template('view.html', title='View',room_example=room_example_html_list,ls_rooms=ls_rooms)
-=======
-    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
-                                'tuesday':dictionary_day_class_list['tuesday']['2.506'],
-                                'wednesday':dictionary_day_class_list['wednesday']['2.506'],
-                                'thursday':dictionary_day_class_list['thursday']['2.506'],
-                                'friday':dictionary_day_class_list['friday']['2.506']})
-    room_example_html = room_example.to_html()
-    return render_template('view.html', title='View',room_example=room_example_html)
->>>>>>> 00e1ab293bf3f13e2e942930b15b029fffa2bb6c
 
 
 if __name__ == '__main__':
