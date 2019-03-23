@@ -8,12 +8,19 @@ class generate1:
         self.dictOfRooms = dictOfRooms
         self.lsOfSessions = lsOfSessions
 
-        self.nineteentAvail = ['available' for i in range(19)]
+        self.nineteentAvail = [u'available' for i in range(19)]
         self.rooms_timetable={}
         self.generate_rooms_timetable()
+        
         self.fill_in_hass_and_weekly()
-        self.populate_timetable()
-        self.prepareForFirebase()
+        success = self.populate_timetable()
+        if success:
+            self.prepareForFirebase()
+        else:
+            self.nineteentAvail = [u'available' for i in range(19)]
+            self.rooms_timetable={}
+            self.generate_rooms_timetable()
+            self.prepareForFirebase()
 
     def prepareForFirebase(self):
         #transform all session objects to dictionary
@@ -32,6 +39,8 @@ class generate1:
             a=0
             while not fufilled:
                 a+=1
+                if a==10000:
+                    return False
                 #type of room has to be chosen
                 tempRoom=self.findRandomRoom(self.dictOfRooms,session.roomtype)
                 tempStartTime,dayOfWeek=self.findRandomTimeSlot(session.duration)
@@ -52,6 +61,7 @@ class generate1:
                                                             ))
                 session.startTime= tempStartTime
             self.insertSession(session,tempStartTime,session.duration,dayOfWeek,tempRoom)
+        return True
 
 
     
@@ -124,13 +134,13 @@ class generate1:
             #for each class room , for that day, block out the timing
             #print(self.rooms_timetable['friday']['2.505'])
                 for timeSlot in range(int(genericConstraint[key][u"duration"])):
-                    self.rooms_timetable[key][room][timeSlot+int(genericConstraint[key][u"startTime"])]="generic"
+                    self.rooms_timetable[key][room][timeSlot+int(genericConstraint[key][u"startTime"])]=u"generic"
         for key in hassConstraint:
             for room in self.rooms_timetable[key]:
             #for each class room , for that day, block out the timing
             #print(self.rooms_timetable['friday']['2.505'])
                 for timeSlot in range(int(hassConstraint[key][u"duration"])):
-                    self.rooms_timetable[key][room][timeSlot+int(hassConstraint[key][u"startTime"])]="hass"
+                    self.rooms_timetable[key][room][timeSlot+int(hassConstraint[key][u"startTime"])]=u"hass"
                        
 
 
