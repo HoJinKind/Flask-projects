@@ -3,48 +3,18 @@ from flask import Flask , request, jsonify, render_template,redirect,url_for,ses
 import pandas as pd
 import readwritefromFB
 import generate1
+from flask_nav import Nav
+from flask_nav.elements import Navbar,Subgroup,View,Link,Text,Separator
+import re
 
-posts =[
-   {
-        'prof': 'oka',
-        'class': 'CS',
-        'quantity':'3'
-    } ,
-       {
-        'prof': 'gemma',
-        'class': 'algo',
-        'quantity':'3'
-    },
-       {
-        'prof': 'datta',
-        'class': 'algo',
-        'quantity':'4'
-    }
-]
 
 app = Flask(__name__)
-
+# nav = Nav(app)
+# nav.register_element('my_navbar',Navbar(
+#     'theNav'),
+#     View('H'))
 app.secret_key = "super secret key"
 
-@app.route("/upload", methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        print(request.files['file'])
-        f = request.files['file']
-        data_xls = pd.read_excel(f)
-        return data_xls.to_html()
-    return '''
-    <!doctype html>
-    <title>Upload an excel file</title>
-    <h1>Excel file upload (csv, tsv, csvz, tsvz only)</h1>
-    <form action="" method=post enctype=multipart/form-data>
-    <p><input type=file name=file><input type=submit value=Upload>
-    </form>
-    '''
-
-@app.route("/export", methods=['GET','POST'])
-def export_records():
-    return
 
 @app.route("/", methods=['GET','POST'])
 def login():
@@ -92,15 +62,6 @@ def auth(username,pd):
 def goToGenerate():
    redirect(url_for('generate'))
 
-def create_pdFrame(dictionary_day_class_list,roomID):
-    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday'][roomID],
-                                        'tuesday':dictionary_day_class_list['tuesday'][roomID],
-                                        'wednesday':dictionary_day_class_list['wednesday'][roomID],
-                                        'thursday':dictionary_day_class_list['thursday'][roomID],
-                                        'friday':dictionary_day_class_list['friday'][roomID]})
-    return room_example
-
-
 
 
 @app.route("/modify", methods=['GET','POST'])
@@ -131,6 +92,24 @@ def modify_public():
 
 
 
+def create_list_pdFrame(fbDataTimeTable):
+    list_pdFrame=[]
+    ls_rooms=[]
+    for i in fbDataTimeTable['monday'].keys():
+        list_pdFrame.append(create_pdFrame(fbDataTimeTable,i))
+        ls_rooms.append(i)
+        print(i)
+    return list_pdFrame,ls_rooms
+
+def create_pdFrame(dictionary_day_class_list,roomID):
+    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday'][roomID],
+                                        'tuesday':dictionary_day_class_list['tuesday'][roomID],
+                                        'wednesday':dictionary_day_class_list['wednesday'][roomID],
+                                        'thursday':dictionary_day_class_list['thursday'][roomID],
+                                        'friday':dictionary_day_class_list['friday'][roomID]})
+    return room_example
+
+
 @app.route("/view", methods=['GET','POST'])
 def view():
     if not session['loggedIn']== True:
@@ -154,16 +133,16 @@ def view():
              
 
     pd.set_option('display.max_colwidth', -1)
-    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
-                                'tuesday':dictionary_day_class_list['tuesday']['2.506'],
-                                'wednesday':dictionary_day_class_list['wednesday']['2.506'],
-                                'thursday':dictionary_day_class_list['thursday']['2.506'],
-                                'friday':dictionary_day_class_list['friday']['2.506']})
+    
+    ls_timeTable_in_pdframe,ls_rooms=create_list_pdFrame(dictionary_day_class_list)
+    
     #room_example.rename(index={0:'Adasda'})
-    room_example_html = room_example.to_html()
+    room_example_html_list=[]
+    for room_example in ls_timeTable_in_pdframe:
+        room_example_html_list.append(room_example.to_html())
     #need to make a list of them.
-    room_example_html_list = [room_example_html]
-    return render_template('view.html', title='View',room_example=room_example_html_list)
+
+    return render_template('view.html', title='View',room_example=room_example_html_list,ls_rooms=ls_rooms)
 
 
 if __name__ == '__main__':

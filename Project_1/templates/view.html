@@ -40,10 +40,40 @@
     </li>
   </ul>
   </nav>
+
 {% block content %}
-<h1>{{name}}</h1>
-{{room_example[0] | safe}}
+  <!--Navtabs-->
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+<div class="container">
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="{{'#%s'%ls_rooms[0].replace('.','')}}" aria-controls="{{ls_rooms[0].replace('.','')}}" role="tab" data-toggle="tab">{{ls_rooms[0]}}</a></li>
+   
+    {% for i in range((ls_rooms|length)-1) %}
+      <li role="presentation" ><a href="{{'#%s'%ls_rooms[i+1].replace('.','')}}" aria-controls="{{ls_rooms[i+1].replace('.','')}}" role="tab" data-toggle="tab">{{ls_rooms[i+1]}}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="tab-content">
+    <div role = "tabpanel" class = "tab-pane fade in active" id="{{ls_rooms[0].replace('.','')}}">{{room_example[0] | safe}}</div>
+    {% for i in range((ls_rooms|length)-1) %}
+      <div role = "tabpanel" class = "tab-pane fade" id="{{ls_rooms[i+1].replace('.','')}}">{{room_example[i+1] | safe}}</div>
+    {% endfor %} 
+
+  </div>
+</div>
+
+</body>
 {% endblock %}
+
+
   <!-- <div class="logo">
     View
   </div>
