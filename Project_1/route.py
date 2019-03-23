@@ -107,12 +107,8 @@ def view():
     ls_timeTable_in_pdframe,ls_rooms=create_list_pdFrame(dictionary_day_class_list)
     print(ls_timeTable_in_pdframe[0].shape)
     #room_example.rename(index={0:'Adasda'})
-    room_example_html_list=[]
+    room_example_html_list=convertPandasToHTML(ls_timeTable_in_pdframe)
     
-    for room_example in ls_timeTable_in_pdframe:
-        
-        room_example.rename(index={0:'8:30',1:'9:00',2:'9:30',3:'10:00',4:'10:30',5:'11:00',6:'11:30',7:'12:00',8:'12:30',9:'13:00',10:'13:30',11:'14:00',12:'14:30',13:'15:00',14:'15:30',15:'16:00',16:'16:30',17:'17:00', 18:'17:30'},inplace =True)
-        room_example_html_list.append(room_example.to_html())
     #need to make a list of them.
     return render_template('view.html', title='View',room_example=room_example_html_list,ls_rooms=ls_rooms)
 

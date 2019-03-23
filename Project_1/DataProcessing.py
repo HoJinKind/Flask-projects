@@ -32,3 +32,10 @@ def convertSessionToStrings(dictionary_day_class_list):
                     tempstr=tempstr +'  subject:' +str(temp_dict[u'subject'])
                     dictionary_day_class_list[day][classroom][timeSlot]=tempstr
     return dictionary_day_class_list
+
+def convertPandasToHTML(ls_timeTable_in_pdframe):
+    room_example_html_list=[]
+    for room_example in ls_timeTable_in_pdframe:
+        room_example.rename(index={0:'8:30',1:'9:00',2:'9:30',3:'10:00',4:'10:30',5:'11:00',6:'11:30',7:'12:00',8:'12:30',9:'13:00',10:'13:30',11:'14:00',12:'14:30',13:'15:00',14:'15:30',15:'16:00',16:'16:30',17:'17:00', 18:'17:30'},inplace =True)
+        room_example_html_list.append(room_example.to_html())
+    return room_example_html_list
