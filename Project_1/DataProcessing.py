@@ -14,6 +14,8 @@ def create_pdFrame(dictionary_day_class_list,roomID):
                                         'wednesday':dictionary_day_class_list['wednesday'][roomID],
                                         'thursday':dictionary_day_class_list['thursday'][roomID],
                                         'friday':dictionary_day_class_list['friday'][roomID]})
+    day_order=['monday','tuesday','wednesday','thursday','friday']
+    room_example = room_example.reindex(columns=day_order)
     return room_example
 
 

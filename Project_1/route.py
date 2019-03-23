@@ -101,7 +101,7 @@ def view():
     #needs triple for loop for day of wk and class, and hr,
 
     
-    ls_timeTable_in_pdframe,ls_rooms=create_list_pdFrame(dictionary_day_class_list)
+    ls_timeTable_in_pdframe,ls_rooms =create_list_pdFrame(dictionary_day_class_list)
     print(ls_timeTable_in_pdframe[0].shape)
     room_example_html_list=convertPandasToHTML(ls_timeTable_in_pdframe)
     
