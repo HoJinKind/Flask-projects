@@ -7,12 +7,9 @@ from flask_nav import Nav
 from flask_nav.elements import Navbar,Subgroup,View,Link,Text,Separator
 import re
 from DataProcessing import *
+
 pd.set_option('display.max_colwidth', -1)
 app = Flask(__name__)
-# nav = Nav(app)
-# nav.register_element('my_navbar',Navbar(
-#     'theNav'),
-#     View('H'))
 app.secret_key = "super secret key"
 
 
@@ -106,7 +103,6 @@ def view():
     
     ls_timeTable_in_pdframe,ls_rooms=create_list_pdFrame(dictionary_day_class_list)
     print(ls_timeTable_in_pdframe[0].shape)
-    #room_example.rename(index={0:'Adasda'})
     room_example_html_list=convertPandasToHTML(ls_timeTable_in_pdframe)
     
     #need to make a list of them.

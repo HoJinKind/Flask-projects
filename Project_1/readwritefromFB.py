@@ -49,3 +49,8 @@ def updateTimetable(data):
 def auth(username,password):
     usr_details_ref = dbfs.collection(u'Course_coordinator').document('cc1').get().to_dict()
     return usr_details_ref['username']==username and bcrypt.checkpw(password.encode('utf8'),usr_details_ref['password'].encode('utf8'))
+
+def readHassAndWeeklyConstraints():
+    generic = dbfs.collection(u'hard_constraints').document(u'generic').get().to_dict()
+    hass = dbfs.collection(u'hard_constraints').document(u'hass').get().to_dict()
+    return generic,hass

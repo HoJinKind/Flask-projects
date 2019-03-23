@@ -11,6 +11,7 @@ class generate1:
         self.nineteentAvail = ['available' for i in range(19)]
         self.rooms_timetable={}
         self.generate_rooms_timetable()
+        self.fill_in_hass_and_weekly()
         self.populate_timetable()
         self.prepareForFirebase()
 
@@ -20,7 +21,7 @@ class generate1:
         for day in tempTimeTable:
             for room in tempTimeTable[day]:
                 for index in range(len(tempTimeTable[day][room])):
-                    if not tempTimeTable[day][room][index] == 'available':
+                    if not( tempTimeTable[day][room][index] == 'available' or tempTimeTable[day][room][index] == 'generic' or tempTimeTable[day][room][index] == 'hass'  ):
                         tempTimeTable[day][room][index] = vars(tempTimeTable[day][room][index])
         readwritefromFB.updateTimetable(tempTimeTable)
 
@@ -51,14 +52,9 @@ class generate1:
                                                             ))
                 session.startTime= tempStartTime
             self.insertSession(session,tempStartTime,session.duration,dayOfWeek,tempRoom)
-        print(self.rooms_timetable['monday']['2.505'])
-        print(self.rooms_timetable['tuesday']['2.505'])
-        print(self.rooms_timetable['wednesday']['2.505'])
-        print(self.rooms_timetable['thursday']['2.505'])
-        print(self.rooms_timetable['friday']['2.505'])
 
 
-
+    
 
 
     def insertSession(self,session,startTime,duration,day,room):
@@ -114,9 +110,31 @@ class generate1:
                 self.rooms_timetable['friday'] = {room:copy.deepcopy(self.nineteentAvail)}
             else:
                 self.rooms_timetable['friday'][room]=copy.deepcopy(self.nineteentAvail)
-    
 
-    
+
+                       
+     
+
+
+
+    def fill_in_hass_and_weekly(self):
+        genericConstraint,hassConstraint=readwritefromFB.readHassAndWeeklyConstraints()
+        for key in genericConstraint:
+            for room in self.rooms_timetable[key]:
+            #for each class room , for that day, block out the timing
+            #print(self.rooms_timetable['friday']['2.505'])
+                for timeSlot in range(int(genericConstraint[key][u"duration"])):
+                    self.rooms_timetable[key][room][timeSlot+int(genericConstraint[key][u"startTime"])]="generic"
+        for key in hassConstraint:
+            for room in self.rooms_timetable[key]:
+            #for each class room , for that day, block out the timing
+            #print(self.rooms_timetable['friday']['2.505'])
+                for timeSlot in range(int(hassConstraint[key][u"duration"])):
+                    self.rooms_timetable[key][room][timeSlot+int(hassConstraint[key][u"startTime"])]="hass"
+                       
+
+
+
     def  check_room_available(self,room,duration,startTime,day):
         #check if for a specific day, time, room is available,m else, run the check for plus minus timing
         #make sure start not too late
@@ -126,6 +144,7 @@ class generate1:
                 return False
         print('room return true')
         return True
+
     def check_weekly_constraints(self,duration,startTime):
         for i in range(duration):
             if not self.rooms_timetable[day][room][startTime+i] == 'available':
@@ -142,6 +161,8 @@ class generate1:
                 #cycle thru rooms
                 if self.rooms_timetable[day][key][starttime+duration]=='available':
                     pass
+                elif self.rooms_timetable[day][key][starttime+duration]=='generic' or  self.rooms_timetable[day][key][starttime+duration]=='hass':
+                    return False
                 else:
                     for prof in self.rooms_timetable[day][key][starttime+duration].profs:
                     #cycle thru list of profs
@@ -161,6 +182,8 @@ class generate1:
                 #cycle thru rooms
                 if self.rooms_timetable[day][key][starttime+duration]=='available':
                     pass
+                elif self.rooms_timetable[day][key][starttime+duration]=='generic' or  self.rooms_timetable[day][key][starttime+duration]=='hass':
+                    return False
                 else:
                     for cohort in self.rooms_timetable[day][key][starttime+duration].cohortID:
                     #cycle thru list of cohorts

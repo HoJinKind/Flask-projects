@@ -2,30 +2,8 @@ import readwritefromFB
 
 class chromosome:
 
-    # data= {
-    #     list of sessions.
-    #     list of rooms.
-    #     list of constraints
-    # }
-    #
-        # the actual chromosome.
-        # contain a list[mon to friday]
-        # within monday is a dictionary of lect, cc...
-        # within lect: [l1,l2]
-        # within l1: [timetable]. in each box is a session object.
-        # value will eitheer be session, true, false. true means available. false means block out
-        #false can use for artificailly block or class earlier block
-        #for each item. there is a list.
     def __init__(self,data,template):
         print(123)
-
-
-
-
-
-
-
-
 
 class session:
     session_count=0
