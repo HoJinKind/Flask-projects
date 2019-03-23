@@ -38,7 +38,11 @@
         </div>
       </a>
     </li>
-  </ul>
+    <li>
+    <div class="space_logout"></div>
+    <button onclick="myFunction()">Logout</button>
+  </li>
+</ul>
   </nav>
   <div class="logo">
     eGenda
@@ -85,8 +89,15 @@
       <center>
         <p class="space_footer"></p>
       <hr>
-      &copy eGenda 2019
+      &copy; eGenda 2019
     </center>
     </footer>
+
+    <script>
+    function myFunction() {
+    alert("Logout");
+    location.href="/";
+    }
+    </script>
 </body>
 </html>

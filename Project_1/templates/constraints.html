@@ -38,6 +38,10 @@
         </div>
       </a>
     </li>
+    <li>
+    <div class="space_logout"></div>
+    <button onclick="myFunction()">Logout</button>
+  </li>
   </ul>
   </nav>
   <div class="logo">
@@ -49,8 +53,9 @@
     <br>
     <br>
     <form>
-      <input type="button" class="button" value="Prof/Weekly Constraints" onclick="location.href='constraint_Prof'">
-      <input type="button" class="button" value="One Time Constraints" onclick="location.href='constraint_OneTime'">
+      <input type="button" class="button" value="Add Prof/Weekly Constraints" onclick="location.href='constraint_Prof'">
+      <input type="button" class="button" value="Add One Time Constraints" onclick="location.href='constraint_OneTime'">
+      <input type="button" class="button" value="View Constraints">
     </form>
   </center>
  </section>
@@ -59,8 +64,14 @@
     <center>
       <p class="space_footer"></p>
     <hr>
-    &copy eGenda 2019
+    &copy; eGenda 2019
   </center>
   </footer>
+  <script>
+  function myFunction() {
+  alert("Logout");
+  location.href="/";
+  }
+  </script>
 </body>
 </html>
