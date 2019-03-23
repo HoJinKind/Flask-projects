@@ -59,10 +59,10 @@
 <div class="container">
 
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="{{'#%s'%ls_rooms[0].replace('.','')}}" aria-controls="{{ls_rooms[0].replace('.','')}}" role="tab" data-toggle="tab">{{ls_rooms[0]}}</a></li>
+    <li role="presentation" class="active"><a href="{{'#%s'%ls_rooms[0].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[0]}}</a></li>
    
     {% for i in range((ls_rooms|length)-1) %}
-      <li role="presentation" ><a href="{{'#%s'%ls_rooms[i+1].replace('.','')}}" aria-controls="{{ls_rooms[i+1].replace('.','')}}" role="tab" data-toggle="tab">{{ls_rooms[i+1]}}</a></li>
+      <li role="presentation" ><a href="{{'#%s'%ls_rooms[i+1].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[i+1]}}</a></li>
     {% endfor %}
   </ul>
   <div class="tab-content">

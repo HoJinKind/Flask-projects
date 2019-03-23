@@ -6,8 +6,8 @@ import generate1
 from flask_nav import Nav
 from flask_nav.elements import Navbar,Subgroup,View,Link,Text,Separator
 import re
-
-
+from DataProcessing import *
+pd.set_option('display.max_colwidth', -1)
 app = Flask(__name__)
 # nav = Nav(app)
 # nav.register_element('my_navbar',Navbar(
@@ -92,22 +92,7 @@ def modify_public():
 
 
 
-def create_list_pdFrame(fbDataTimeTable):
-    list_pdFrame=[]
-    ls_rooms=[]
-    for i in fbDataTimeTable['monday'].keys():
-        list_pdFrame.append(create_pdFrame(fbDataTimeTable,i))
-        ls_rooms.append(i)
-        print(i)
-    return list_pdFrame,ls_rooms
 
-def create_pdFrame(dictionary_day_class_list,roomID):
-    room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday'][roomID],
-                                        'tuesday':dictionary_day_class_list['tuesday'][roomID],
-                                        'wednesday':dictionary_day_class_list['wednesday'][roomID],
-                                        'thursday':dictionary_day_class_list['thursday'][roomID],
-                                        'friday':dictionary_day_class_list['friday'][roomID]})
-    return room_example
 
 
 @app.route("/view", methods=['GET','POST'])
@@ -115,33 +100,20 @@ def view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     dictionary_day_class_list = readwritefromFB.readfromfbTimeTable();
-    
+    dictionary_day_class_list = convertSessionToStrings(dictionary_day_class_list)
     #needs triple for loop for day of wk and class, and hr,
-    for day in dictionary_day_class_list.keys():
-        for classroom in dictionary_day_class_list[day].keys():
-            for timeSlot in range(0,19):
-                temp_dict =dictionary_day_class_list[day][classroom][timeSlot]
 
-                if type(temp_dict) == dict :
-                    tempstr= ""
-                    #convert to str, take name
-                    tempstr=tempstr +'cohorts:' +str(temp_dict[u'cohortID'])
-
-                    tempstr=tempstr +'  profs:' +str(temp_dict[u'profs'])
-                    tempstr=tempstr +'  subject:' +str(temp_dict[u'subject'])
-                    dictionary_day_class_list[day][classroom][timeSlot]=tempstr
-             
-
-    pd.set_option('display.max_colwidth', -1)
     
     ls_timeTable_in_pdframe,ls_rooms=create_list_pdFrame(dictionary_day_class_list)
-    
+    print(ls_timeTable_in_pdframe[0].shape)
     #room_example.rename(index={0:'Adasda'})
     room_example_html_list=[]
+    
     for room_example in ls_timeTable_in_pdframe:
+        
+        room_example.rename(index={0:'8:30',1:'9:00',2:'9:30',3:'10:00',4:'10:30',5:'11:00',6:'11:30',7:'12:00',8:'12:30',9:'13:00',10:'13:30',11:'14:00',12:'14:30',13:'15:00',14:'15:30',15:'16:00',16:'16:30',17:'17:00', 18:'17:30'},inplace =True)
         room_example_html_list.append(room_example.to_html())
     #need to make a list of them.
-
     return render_template('view.html', title='View',room_example=room_example_html_list,ls_rooms=ls_rooms)
 
 
