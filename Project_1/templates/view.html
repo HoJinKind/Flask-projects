@@ -66,14 +66,12 @@
   <div class="tab-content">
     <div role = "tabpanel" class = "tab-pane fade in active" id="b">
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" ><a href="{{'#%s'%ls_rooms[0].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[0]}}</a></li>
-    
-      {% for i in range((ls_rooms|length)-1) %}
-        <li role="presentation" ><a href="{{'#%s'%ls_rooms[i+1].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[i+1]}}</a></li>
+      {% for i in range((ls_rooms|length)) %}
+        <li role="presentation" ><a href="{{'#%s'%ls_rooms[i].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[i]}}</a></li>
       {% endfor %}
     </ul>
     <div class="tab-content">
-      {% for i in range((ls_rooms|length)-1) %}
+      {% for i in range((ls_rooms|length)) %}
       <div role = "tabpanel" class = "tab-pane fade" id="{{ls_rooms[i].replace('.','')}}">{{room_example[i] | safe}}</div>
 
       {% endfor %} 
