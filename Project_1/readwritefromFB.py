@@ -14,7 +14,6 @@ def readfromfbHardConstraints():
     return doc_ref1,doc_ref2
 
         
-
 def readfromfbProfConstraints():
     pass
 
@@ -36,21 +35,33 @@ def readfromfbRoom():
 #readfromfb()
 def readfromfbTimeTable():
     doc_ref = dbfs.collection(u'timetable').document('finalised').get()
-    
-
     # for doct in doc_ref:
     #     print(doct.id,"{}".format(doct.to_dict()))
     return doc_ref.to_dict()
-
-def updateTimetable(data):
-    doc_ref = dbfs.collection(u'timetable').document(u'finalised')
-    doc_ref.set(data)
-
-def auth(username,password):
-    usr_details_ref = dbfs.collection(u'Course_coordinator').document('cc1').get().to_dict()
-    return usr_details_ref['username']==username and bcrypt.checkpw(password.encode('utf8'),usr_details_ref['password'].encode('utf8'))
 
 def readHassAndWeeklyConstraints():
     generic = dbfs.collection(u'hard_constraints').document(u'generic').get().to_dict()
     hass = dbfs.collection(u'hard_constraints').document(u'hass').get().to_dict()
     return generic,hass
+
+def auth(username,password):
+    usr_details_ref = dbfs.collection(u'Course_coordinator').document('cc1').get().to_dict()
+    return usr_details_ref['username']==username and bcrypt.checkpw(password.encode('utf8'),usr_details_ref['password'].encode('utf8'))
+
+
+
+#updating firebase stuff
+
+def updateTimetable(data):
+    doc_ref = dbfs.collection(u'timetable').document(u'finalised')
+    doc_ref.set(data)
+
+def appendToSingleConstraint(data):
+
+    doc_ref=dbfs.collection('single_constraints').document('week_'+data[0])
+    doc_ref.set(data[1],merge=True)
+
+            
+    # if 'week_1' in doc_ref.keys():
+    #     return True
+    

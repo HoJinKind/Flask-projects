@@ -7,7 +7,7 @@ from flask_nav import Nav
 from flask_nav.elements import Navbar,Subgroup,View,Link,Text,Separator
 import re
 from DataProcessing import *
-
+from datetime import *
 pd.set_option('display.max_colwidth', -1)
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -79,6 +79,29 @@ def constraints():
 def modify_event():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        eventName = request.form['eventName']
+        WeekNo = request.form['weekNo']
+        DayOfWeek = request.form['dayOfWeek']
+        startTime = request.form['startTime']
+        endTime = request.form['endTime']
+        print(type(endTime))
+        fmt = '%H:%M'
+        time1  = datetime.strptime(startTime, fmt)
+        time2  = datetime.strptime(endTime, fmt)
+        firstClass= datetime.strptime('08:30', fmt)
+        st=(time1-firstClass).total_seconds()/(60*30)
+        duration= (time2-time1).total_seconds()/(60*30)
+        if duration<0:
+            return render_template('constraint_OneTime.html', title='Constraint_OneTime')
+        dataDict =[WeekNo,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8"),'eventName':eventName}}]
+        print(dataDict)
+        print(DayOfWeek)
+        print(WeekNo)
+        print(readwritefromFB.appendToSingleConstraint(dataDict))
+        return render_template('constraints.html', title='Constraint_OneTime')
+    
     return render_template('constraint_OneTime.html', title='Constraint_OneTime')
 
 @app.route("/constraint_Prof", methods=['GET','POST'])

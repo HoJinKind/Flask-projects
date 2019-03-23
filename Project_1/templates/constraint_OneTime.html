@@ -50,15 +50,22 @@
   <section class="function_modify">
   <center>
   <span class="login_text">Add One Time Constraint</span>
-  <form>
+  <form method="POST">
     <table>
-      <tr><td>Event Name </td> <td><input type="text"></td></tr>
-      <tr><td>Date</td> <td><input type="date"></td></tr>
-      <tr><td>Start Time</td><td><input type="time"></td></tr>
-      <tr><td>End Time</td><td><input type="time"></td></tr>
+      <tr><td>Event Name </td> <td><input name ="eventName" type="text" required></td></tr>
+      <tr><td>WeekNo</td> <td><input name ="weekNo" type="number" required></td></tr>
+      <tr><td>Day Of Week</td> <td><select name="dayOfWeek">
+        <option value="monday">monday
+        <option value="tuesday">tuesday
+        <option value="wednesday">wednesday
+        <option value="thursday">thursday
+        <option value="friday">friday
+        </select></td></tr>
+      <tr><td>Start Time</td><td><input  name="startTime" type="time" min="08:30:00" max="18:00:00" step="1800" required></td></tr>
+      <tr><td>End Time</td><td><input name="endTime" type="time" min="08:30:00" max="18:00:00" step="1800" required></td></tr>
+      <tr><td></td><td><input type="submit" value="submit"></td>
     </table>
-    <input type="submit" value="submit"> <!--Just press the button to go to the "home" page.-->
-  </form>
+    </form>
   </center>
 </section>
   </main>
