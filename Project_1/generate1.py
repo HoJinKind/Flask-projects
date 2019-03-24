@@ -2,12 +2,12 @@ import readwritefromFB
 import chromosome
 import copy
 from random import random, choice, randint
-
+#generates the finalised timetable, given all the constraints. if it fails, return all avail, unfiled timetable
 class generate1:
-    def __init__(self,lsOfSessions,dictOfRooms):
+    def __init__(self,lsOfSessions,dictOfRooms,dict_prof_constraints):
         self.dictOfRooms = dictOfRooms
         self.lsOfSessions = lsOfSessions
-
+        self.profConstraints =dict_prof_constraints
         self.nineteentAvail = [u'available' for i in range(19)]
         self.rooms_timetable={}
         self.generate_rooms_timetable()
@@ -21,7 +21,7 @@ class generate1:
             self.rooms_timetable={}
             self.generate_rooms_timetable()
             self.prepareForFirebase()
-
+    #converts object chromosome to dictionary, to store in database
     def prepareForFirebase(self):
         #transform all session objects to dictionary
         tempTimeTable= copy.deepcopy(self.rooms_timetable)
@@ -47,18 +47,21 @@ class generate1:
                 print(tempStartTime,dayOfWeek,fufilled)
                 #this is where the checks are
                 fufilled = (self.check_prof_available(session.duration,
-                                                       tempStartTime,
-                                                       dayOfWeek,
-                                                       session.profs) and
-                             self.check_room_available(tempRoom,
-                                                       session.duration,
-                                                       tempStartTime,
-                                                       dayOfWeek) and
-                              self.check_students_available(session.duration,
-                                                            tempStartTime,
-                                                            dayOfWeek,
-                                                            session.cohortID,
-                                                            ))
+                                tempStartTime,
+                                dayOfWeek,
+                                session.profs) and
+                            self.check_room_available(tempRoom,
+                                session.duration,
+                                tempStartTime,
+                                dayOfWeek) and
+                            self.check_students_available(session.duration,
+                                tempStartTime,
+                                dayOfWeek,
+                                session.cohortID) and
+                            self.check_prof_constraints(session.profs,
+                                session.duration,
+                                dayOfWeek,
+                                tempStartTime))
                 session.startTime= tempStartTime
             self.insertSession(session,tempStartTime,session.duration,dayOfWeek,tempRoom)
         return True
@@ -155,13 +158,21 @@ class generate1:
         print('room return true')
         return True
 
-    def check_weekly_constraints(self,duration,startTime):
-        for i in range(duration):
-            if not self.rooms_timetable[day][room][startTime+i] == 'available':
-                print('room return false')
-                return False
-        print('room return true')
+    def check_prof_constraints(self,profsInQuestion,duration,day,startTime):
+        for classTiming in range(startTime,startTime+duration):
+            for profInQuestion in profsInQuestion:
+                print(self.profConstraints)
+                if profInQuestion in self.profConstraints.keys():
+                    if day in self.profConstraints[profInQuestion].keys():
+                        constraintStartTime=int(self.profConstraints[profInQuestion][day]['startTime'])
+                        constraintDuration=int(self.profConstraints[profInQuestion][day]['duration'])
+                        for constraintTiming in range(constraintStartTime,constraintDuration+constraintStartTime):
+                            if constraintTiming == classTiming:
+                                return False
         return True
+
+
+
     
     def check_prof_available(self,duration,starttime,day,profsInQuestion):
         #check if prf is in any of these locations at the point in time
@@ -207,55 +218,10 @@ class generate1:
             
         
         
-        
-
-# def generateTemplateTest(dictOfRooms):
-#     template = {}
-#     nineteentAvail = ['available' for i in range(19)]
-#     for room in dictOfRooms:
-#         if 'monday' not in template.keys():
-#             template['monday'] = {room: nineteentAvail}
-#         else:
-#             template['monday'][room] = nineteentAvail
-#
-#         if 'tuesday' not in template.keys():
-#             template['tuesday'] = {room: nineteentAvail}
-#         else:
-#             template['tuesday'][room] = nineteentAvail
-#
-#         if 'wednesday' not in template.keys():
-#             template['wednesday'] = {room: nineteentAvail}
-#         else:
-#             template['wednesday'][room] = nineteentAvail
-#
-#         if 'thursday' not in template.keys():
-#             template['thursday'] = {room: nineteentAvail}
-#         else:
-#             template['thursday'][room] = nineteentAvail
-#
-#         if 'friday' not in template.keys():
-#             template['friday'] = {room: nineteentAvail}
-#         else:
-#             template['friday'][room] = nineteentAvail
-#     return template
-#
-#
-#
-#
-# temp= readfromFB.readfromfbRoom()
-#
-# roomdict = temp.to_dict()
-# x = generateTemplateTest(roomdict)
-#
-# print(x['tuesday'])
-
-# if __name__ == '__main__':
-#     ls_chromosome=chromosome.createSession()
-#     room_dict=readfromFB.readfromfbRoom()
-#     firstGeneration=generate1(ls_chromosome,room_dict)
-#     print(firstGeneration.rooms_timetable)
 def gen():
     ls_chromosome=chromosome.createSession()
     room_dict=readwritefromFB.readfromfbRoom()
-    firstGeneration=generate1(ls_chromosome,room_dict)
+    dict_prof_constraints= readwritefromFB.readfromfbProfConstraints()
+    print(dict_prof_constraints)
+    firstGeneration=generate1(ls_chromosome,room_dict,dict_prof_constraints)
     return firstGeneration.rooms_timetable

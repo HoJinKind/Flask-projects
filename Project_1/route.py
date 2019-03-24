@@ -22,6 +22,7 @@ def login():
 
         auth(usrname,pd)
     if session['loggedIn']== True:
+        readwritefromFB.readfromfbProfConstraints();
         return redirect(url_for('home'))
 
     return render_template('login.html', title='Log in')
@@ -41,13 +42,6 @@ def generate():
             dictionary_day_class_list= generate1.gen()
 
             return redirect(url_for('view'))
-            # room_example=pd.DataFrame({'monday':dictionary_day_class_list['monday']['2.506'],
-            #                             'tuesday':dictionary_day_class_list['tuesday']['2.506'],
-            #                             'wednesday':dictionary_day_class_list['wednesday']['2.506'],
-            #                             'thursday':dictionary_day_class_list['thursday']['2.506'],
-            #                             'friday':dictionary_day_class_list['friday']['2.506']})
-            # return room_example.to_html()
-            #df = pd.DataFrame(np.array(my_list).reshape(3,3), columns = list("abc"))
     return render_template('generate.html', title='Generate')
 
 
@@ -79,7 +73,7 @@ def constraints():
 def modify_event():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    
+    #add into firebase, if data is legit
     if request.method == 'POST':
         eventName = request.form['eventName']
         WeekNo = request.form['weekNo']
@@ -96,22 +90,17 @@ def modify_event():
         if duration<0:
             return render_template('constraint_OneTime.html', title='Constraint_OneTime')
         dataDict =[WeekNo,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8"),'eventName':eventName}}]
-        print(dataDict)
-        print(DayOfWeek)
-        print(WeekNo)
-        print(readwritefromFB.appendToSingleConstraint(dataDict))
+
         return render_template('constraints.html', title='Constraint_OneTime')
     
     return render_template('constraint_OneTime.html', title='Constraint_OneTime')
+
 
 @app.route("/constraint_Prof", methods=['GET','POST'])
 def modify_public():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     return render_template('constraint_Prof.html', title='Constraint_Prof')
-
-
-
 
 
 

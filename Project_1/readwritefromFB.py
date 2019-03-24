@@ -15,7 +15,13 @@ def readfromfbHardConstraints():
 
         
 def readfromfbProfConstraints():
-    pass
+    doc_ref = dbfs.collection(u'prof_constraints').get()
+
+    dict_prof_constraints={}
+    for doct in doc_ref:
+        temp_dict = doct.to_dict()
+        dict_prof_constraints[doct.id]=temp_dict
+    return dict_prof_constraints
 
 def readfromfb():
     doc_ref = dbfs.collection(u'dummy').get()
@@ -57,7 +63,6 @@ def updateTimetable(data):
     doc_ref.set(data)
 
 def appendToSingleConstraint(data):
-
     doc_ref=dbfs.collection('single_constraints').document('week_'+data[0])
     doc_ref.set(data[1],merge=True)
 
