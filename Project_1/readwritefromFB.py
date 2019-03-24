@@ -40,10 +40,20 @@ def readfromfbRoom():
 
 #readfromfb()
 def readfromfbTimeTable():
-    doc_ref = dbfs.collection(u'timetable').document('finalised').get()
+    doc_ref = dbfs.collection(u'timetable').get()
+    ls_timetable=[]
+    ls_name=[]
+    for doct in doc_ref:
+
+        ls_timetable.append(doct.to_dict())
+
+        print(len(ls_timetable))
+        ls_name.append(doct.id)
+    
     # for doct in doc_ref:
     #     print(doct.id,"{}".format(doct.to_dict()))
-    return doc_ref.to_dict()
+
+    return (ls_name,ls_timetable)
 
 def readHassAndWeeklyConstraints():
     generic = dbfs.collection(u'hard_constraints').document(u'generic').get().to_dict()

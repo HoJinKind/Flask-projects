@@ -22,7 +22,6 @@ def login():
 
         auth(usrname,pd)
     if session['loggedIn']== True:
-        readwritefromFB.readfromfbProfConstraints();
         return redirect(url_for('home'))
 
     return render_template('login.html', title='Log in')
@@ -108,17 +107,17 @@ def modify_public():
 def view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    dictionary_day_class_list = readwritefromFB.readfromfbTimeTable();
-    dictionary_day_class_list = convertSessionToStrings(dictionary_day_class_list)
+    ls_names,ls_dictionary_day_class_list = readwritefromFB.readfromfbTimeTable();
+    list_of_week_type=[]
+    for i in range(len(ls_names)):
+        dictionary_day_class_list = convertSessionToStrings(ls_dictionary_day_class_list[i])
     #needs triple for loop for day of wk and class, and hr,
+        ls_timeTable_in_pdframe,ls_rooms =create_list_pdFrame(dictionary_day_class_list)
+    
+        list_of_week_type.append(convertPandasToHTML(ls_timeTable_in_pdframe))
 
-    
-    ls_timeTable_in_pdframe,ls_rooms =create_list_pdFrame(dictionary_day_class_list)
-    print(ls_timeTable_in_pdframe[0].shape)
-    room_example_html_list=convertPandasToHTML(ls_timeTable_in_pdframe)
-    
     #need to make a list of them.
-    return render_template('view.html', title='View',room_example=room_example_html_list,ls_rooms=ls_rooms)
+    return render_template('view.html', title='View',list_of_week_type=list_of_week_type,ls_rooms=ls_rooms,ls_names=ls_names)
 
 
 if __name__ == '__main__':

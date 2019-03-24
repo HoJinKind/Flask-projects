@@ -57,24 +57,43 @@
   </head>
   <body>
 <div class="container">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="b"  role="tab" data-toggle="tab">normal</a></li>
+  <ul class="nav nav-tabs" role="tablist" id="og_tabs">
 
-    <li role="presentation" ><a href="c"  role="tab" data-toggle="tab">week 5</a></li>
-   
+    {% for name in range((ls_names|length)) %}
+    <li role="presentation" ><a href="{{'#%s'%ls_names[name]}}"  role="tab" data-toggle="tab">{{ls_names[name]}}</a></li>
+    {% endfor %}
   </ul>
   <div class="tab-content">
-    <div role = "tabpanel" class = "tab-pane fade in active" id="b">
-    <ul class="nav nav-tabs" role="tablist">
+ 
+    {% for name in range((ls_names|length)) %}
+        <div id = "{{'%s'%ls_names[name]}}" class="tab-pane">
+        <ul class="nav nav-tabs" role="tablist">
+        {% for room in range((ls_rooms|length)) %}
+          <li role="presentation" ><a href="{{'#%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}"  role="tab" data-toggle="tab">{{ls_rooms[room]}}</a></li>
+        {% endfor %} 
+      </ul>
+    </div>
+
+
+    {% endfor %} 
+
+    {% for name in range((ls_names|length)) %}
+    <div class="tab-content" id ="{{'%s'%ls_names[name]}}">
+        {% for room in range((ls_rooms|length)) %}
+        <div role = "tabpanel" class = "tab-pane fade" id="{{'%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}">{{list_of_week_type[name][room] | safe}}</div>
+        {% endfor %} 
+    </div>
+    {% endfor %} 
+      <!-- <ul class="nav nav-tabs" role="tablist">
       {% for i in range((ls_rooms|length)) %}
         <li role="presentation" ><a href="{{'#%s'%ls_rooms[i].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[i]}}</a></li>
       {% endfor %}
     </ul>
     <div class="tab-content">
       {% for i in range((ls_rooms|length)) %}
-      <div role = "tabpanel" class = "tab-pane fade" id="{{ls_rooms[i].replace('.','')}}">{{room_example[i] | safe}}</div>
+      <div role = "tabpanel" class = "tab-pane fade" id="{{ls_rooms[i].replace('.','')}}">{{list_of_week_type[0][i] | safe}}</div>
 
-      {% endfor %} 
+      {% endfor %}  -->
 
     </div>
     
