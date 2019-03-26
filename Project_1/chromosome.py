@@ -34,18 +34,20 @@ def createSession():
     doc_ref = readwritefromFB.readfromfb()
     Allsessionslist = []
     ls_of_completed = []
-
+    already_added=False
     dictionary_ofProfs = dict()
     for doct in doc_ref:
         # dictionary_ofProfs[doct.id]=doct.to_dict()
         temp_dict = doct.to_dict()
         for key, value in temp_dict.items():
+            already_added = False
             if 'shared' in value.keys():
                 for prof in value['shared']:
                     if prof in ls_of_completed:
                         # we have added this class already
-                        break
-            Allsessionslist.append(session(value, doct.id))
+                        already_added = True
+            if not already_added:
+                Allsessionslist.append(session(value, doct.id))
         ls_of_completed.append(doct.id)
     return Allsessionslist
 
