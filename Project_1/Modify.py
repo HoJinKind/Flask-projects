@@ -11,13 +11,14 @@ class modify:
         self.rooms_timetable = self.generate_rooms_timetable(raw_rooms_timetable)
 
         self.rooms_timetable=self.consolidate_clashes(self.rooms_timetable)
-
+        print(self.lsOfSessions)
 
         success = self.populate_timetable()#if fail?
         
         if success:
             self.prepareForFirebase()#if fail, wont change
-        print('failed')
+        else:
+            print('failed')
 
     #converts object chromosome to dictionary, to store in database
     def prepareForFirebase(self):
@@ -36,8 +37,10 @@ class modify:
             fufilled = False
             a=0
             while not fufilled:
+                print(session.profs)
                 a+=1
                 if a==10000:
+                    print(session.profs)
                     return False
                 #type of room has to be chosen
                 tempRoom=self.findRandomRoom(self.dictOfRooms,session.roomtype)
@@ -96,6 +99,7 @@ class modify:
 
 
 
+    
     def  check_room_available(self,room,duration,startTime,day):
         #check if for a specific day, time, room is available,m else, run the check for plus minus timing
         #make sure start not too late
@@ -110,7 +114,6 @@ class modify:
         for classTiming in range(startTime,startTime+duration):
             for profInQuestion in profsInQuestion:
                 if profInQuestion in self.profConstraints.keys():
-                    print("hi tony")
                     if day in self.profConstraints[profInQuestion].keys():
                         constraintStartTime=int(self.profConstraints[profInQuestion][day]['startTime'])
                         constraintDuration=int(self.profConstraints[profInQuestion][day]['duration'])
@@ -126,21 +129,24 @@ class modify:
         #check if prf is in any of these locations at the point in time
         for time in range(duration):
             #cycle thru time
-            for key in self.rooms_timetable[day]:
+            for room in self.rooms_timetable[day].keys():
                 #cycle thru rooms
-                if self.rooms_timetable[day][key][starttime+duration]=='available':
+                if self.rooms_timetable[day][room][starttime+time]=='available':
                     pass
-                elif self.rooms_timetable[day][key][starttime+duration]=='generic' or  self.rooms_timetable[day][key][starttime+duration]=='hass':
+                elif self.rooms_timetable[day][room][starttime+time]=='generic' or  self.rooms_timetable[day][room][starttime+time]=='hass':
                     return False
                 else:
-                    for prof in self.rooms_timetable[day][key][starttime+duration].profs:
+                    #for list of profs, teaching in the same  hr
+                    for prof in self.rooms_timetable[day][room][starttime+time].profs:
                     #cycle thru list of profs
                         for profInQuestion in profsInQuestion:
                             #cycle thru list of profs in current session
-                            if prof == profsInQuestion:
+                            if prof == profInQuestion:
                                 print('prof return false')
                                 return False
         return True
+
+
 
 
     def check_students_available(self,duration,starttime,day,cohortsInQuestion):
@@ -149,33 +155,30 @@ class modify:
             #cycle thru time
             for key in self.rooms_timetable[day]:
                 #cycle thru rooms
-                if self.rooms_timetable[day][key][starttime+duration]=='available':
+                if self.rooms_timetable[day][key][starttime+time]=='available':
                     pass
-                elif self.rooms_timetable[day][key][starttime+duration]=='generic' or  self.rooms_timetable[day][key][starttime+duration]=='hass':
+                elif self.rooms_timetable[day][key][starttime+time]=='generic' or  self.rooms_timetable[day][key][starttime+time]=='hass':
                     return False
                 else:
-                    for cohort in self.rooms_timetable[day][key][starttime+duration].cohortID:
+                    for cohort in self.rooms_timetable[day][key][starttime+time].cohortID:
                     #cycle thru list of cohorts
                         for cohortInQuestion in cohortsInQuestion:
                             if cohort == cohortInQuestion:
                                 print('stu return false')
                                 return False
         return True
-    #purpose is to remoee alll classes which have clash now
+
+
+    #purpose is to remove alll classes which have clash now
     def consolidate_clashes(self,fbData): 
         for day in fbData.keys():
-            print(day)
             for room in fbData[day].keys():
                 for index in range(len(fbData[day][room])):
                     if self.check_if_session(fbData[day][room][index]):
                         currentTimeSlot=fbData[day][room][index]
-
-                        if day=='monday' and room == '2.505':
-                            print(currentTimeSlot.profs)
-                            print(self.profConstraints.keys())
-                            print(self.check_prof_constraints(currentTimeSlot.profs,1,day,currentTimeSlot.startTime))
-                        if not self.check_prof_constraints(currentTimeSlot.profs,1,day,currentTimeSlot.startTime):
-                            print("tony")
+                    
+                        if not self.check_prof_constraints(currentTimeSlot.profs,currentTimeSlot.duration,day,currentTimeSlot.startTime):
+                           
                             self.lsOfSessions.append(currentTimeSlot)
                             for duration in range(currentTimeSlot.duration):#remove from master copy
                                 fbData[day][room][duration+index]=u"available"
@@ -200,6 +203,6 @@ def gen():
     #get data required from firebase, then run.
     room_dict=readwritefromFB.readfromfbRoom()
     dict_prof_constraints= readwritefromFB.readfromfbProfConstraints()#needed
-    print(dict_prof_constraints)
     raw_rooms_timetable= readwritefromFB.readfromfbTimeTable()[1][0]
+    print(dict_prof_constraints)
     modify(raw_rooms_timetable,dict_prof_constraints,room_dict)
