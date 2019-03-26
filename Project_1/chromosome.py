@@ -7,22 +7,31 @@ class chromosome:
 
 class session:
     session_count=0
-    def __init__(self,dicti,prof):
+    def __init__(self,dicti,prof=None):
     #def __init__(self,prof,sessionID,startTime,duration,classID,roomtype):
-        self.roomtype = dicti['location']
-        duration_holder= int(float(dicti['duration'])*2)
-        self.duration = duration_holder
-        self.subject = dicti['subject']
-        self.cohortID=dicti['cohorts']
-        self.startTime = None
-        if 'shared' in dicti.keys():
-            self.profs = dicti['shared']
-            self.profs.append(prof)
+        if prof==None:
+            self.roomtype= dicti['roomtype']
+            self.profs= dicti['profs']
+            self.subject = dicti['subject']
+            self.cohortID=dicti['cohortID']
+            self.sessionid=dicti['sessionid']
+            self.duration=dicti['duration']
+            self.startTime=dicti['startTime']
         else:
-            self.profs = [prof]
+            self.roomtype = dicti['location']
+            duration_holder= int(float(dicti['duration'])*2)
+            self.duration = duration_holder
+            self.subject = dicti['subject']
+            self.cohortID=dicti['cohorts']
+            self.startTime = None
+            if 'shared' in dicti.keys():
+                self.profs = dicti['shared']
+                self.profs.append(prof)
+            else:
+                self.profs = [prof]
 
-        self.sessionid =session.session_count
-        session.session_count+=1
+            self.sessionid =session.session_count
+            session.session_count+=1
 
     def __str__(self):
         return ' '.join(str(v) for v in ["sessionid:",self.sessionid,

@@ -38,9 +38,9 @@ def generate():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     if request.method == 'POST':
-            dictionary_day_class_list= generate1.gen()
+        dictionary_day_class_list= generate1.gen()
 
-            return redirect(url_for('view'))
+        return redirect(url_for('view'))
     return render_template('generate.html', title='Generate')
 
 
