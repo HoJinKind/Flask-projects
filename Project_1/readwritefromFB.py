@@ -76,7 +76,6 @@ def appendToSingleConstraint(data):
     doc_ref=dbfs.collection('single_constraints').document('week_'+data[0])
     doc_ref.set(data[1],merge=True)
 
-            
-    # if 'week_1' in doc_ref.keys():
-    #     return True
-    
+def appendToProfConstraint(data):
+    doc_ref=dbfs.collection('prof_constraints').document(data[0])
+    doc_ref.set(data[1],merge=True)         

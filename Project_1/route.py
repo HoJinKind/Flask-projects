@@ -91,7 +91,6 @@ def modify_event():
         dataDict =[WeekNo,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8"),'eventName':eventName}}]
         readwritefromFB.appendToSingleConstraint(dataDict)
         return render_template('constraints.html', title='Constraint_OneTime')
-    
     return render_template('constraint_OneTime.html', title='Constraint_OneTime')
 
 
@@ -99,6 +98,24 @@ def modify_event():
 def modify_public():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
+    #add into firebase, if data is legit
+    if request.method == 'POST':
+        profName = request.form['profName']
+        DayOfWeek = request.form['dayOfWeek']
+        startTime = request.form['startTime']
+        endTime = request.form['endTime']
+        fmt = '%H:%M'
+        time1  = datetime.strptime(startTime, fmt)
+        time2  = datetime.strptime(endTime, fmt)
+        firstClass= datetime.strptime('08:30', fmt)
+        st=(time1-firstClass).total_seconds()/(60*30)
+        duration= (time2-time1).total_seconds()/(60*30)
+        if duration<0:
+            print('failed')
+            return render_template('constraint_Prof.html', title='Constraint_Prof')
+        dataDict =[profName,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8")}}]
+        readwritefromFB.appendToProfConstraint(dataDict)
+        return render_template('constraints.html', title='Constraint')
     return render_template('constraint_Prof.html', title='Constraint_Prof')
 
 

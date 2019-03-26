@@ -50,9 +50,9 @@
   <section class="function_modify">
   <center>
   <span class="login_text">Add Prof/Weekly Constraint</span>
-  <form>
+  <form method= "POST">
     <table>
-      <tr><td>Prof Name</td> <td><select name="prof_name">
+      <tr><td>Prof Name</td> <td><select name="profName">
       <option value="-">-
       <option value="david yau">David yau
       <option value="ernest">Ernest
@@ -62,19 +62,20 @@
       <option value="sun jun">Sun jun
       <option value="tony">Tony
       </select></td></tr>
-      <tr><td>Day of Week</td> <td><select name="day_of_week">
+      <tr><td>Day of Week</td> <td><select name="dayOfWeek">
       <option value="-">-
-      <option value="mon">monday
-      <option value="tue">tuesday
-      <option value="wed">Wednesday
-      <option value="thu">thursday
-      <option value="fri">friday
+      <option value="monday">monday
+      <option value="tuesday">tuesday
+      <option value="wednesday">Wednesday
+      <option value="thursday">thursday
+      <option value="friday">friday
       </select></td></tr>
-      <tr><td>Start Time</td><td><input type="time"  min="08:30:00" max="18:00:00" step="1800" required></td></tr>
-      <tr><td>End Time</td><td><input type="time"  min="08:30:00" max="18:00:00" step="1800" required></td></tr>
+      <tr><td>Start Time</td><td><input name="startTime" type="time"  min="08:30:00" max="18:00:00" step="1800" required></td></tr>
+      <tr><td>End Time</td><td><input name="endTime" type="time"  min="08:30:00" max="18:00:00" step="1800" required></td></tr>
 
     </table>
-    <input type="submit" value="submit">
+
+    <input type="submit" value="submit">    
   </form>
   </center>
 </section>
