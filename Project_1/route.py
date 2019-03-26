@@ -87,9 +87,10 @@ def modify_event():
         st=(time1-firstClass).total_seconds()/(60*30)
         duration= (time2-time1).total_seconds()/(60*30)
         if duration<0:
+            print('failed')
             return render_template('constraint_OneTime.html', title='Constraint_OneTime')
         dataDict =[WeekNo,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8"),'eventName':eventName}}]
-
+        readwritefromFB.appendToSingleConstraint(dataDict)
         return render_template('constraints.html', title='Constraint_OneTime')
     
     return render_template('constraint_OneTime.html', title='Constraint_OneTime')
