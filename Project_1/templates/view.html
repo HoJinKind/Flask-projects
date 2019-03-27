@@ -18,13 +18,6 @@
        </a>
     </li>
     <li>
-      <a href="modify" class="menu-tap">
-        <div class="menu-tap_wrap">
-          Modify
-        </div>
-      </a>
-    </li>
-    <li>
       <a href="constraints" class="menu-tap">
       <div class="menu-tap_wrap">
       Constraints
@@ -64,26 +57,26 @@
     {% endfor %}
   </ul>
   <div class="tab-content">
- 
+
     {% for name in range((ls_names|length)) %}
         <div id = "{{'%s'%ls_names[name]}}" class="tab-pane">
         <ul class="nav nav-tabs" id="{{'#%s_tabs'%ls_names[name]}}" >
         {% for room in range((ls_rooms|length)) %}
           <li role="presentation" ><a href="{{'#%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}"  data-toggle="tab">{{ls_rooms[room]}}</a></li>
-        {% endfor %} 
+        {% endfor %}
       </ul>
     </div>
 
 
-    {% endfor %} 
+    {% endfor %}
 
     {% for name in range((ls_names|length)) %}
     <div class="tab-content" id ="{{'%s'%ls_names[name]}}">
         {% for room in range((ls_rooms|length)) %}
         <div class = "tab-pane" id="{{'%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}">{{list_of_week_type[name][room] | safe}}</div>
-        {% endfor %} 
+        {% endfor %}
     </div>
-    {% endfor %} 
+    {% endfor %}
       <!-- <ul class="nav nav-tabs" role="tablist">
       {% for i in range((ls_rooms|length)) %}
         <li role="presentation" ><a href="{{'#%s'%ls_rooms[i].replace('.','')}}"  role="tab" data-toggle="tab">{{ls_rooms[i]}}</a></li>
@@ -96,7 +89,7 @@
       {% endfor %}  -->
 
     </div>
-    
+
   </div>
 </div>
 </body>

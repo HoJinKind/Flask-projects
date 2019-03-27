@@ -53,13 +53,6 @@ def goToGenerate():
 
 
 
-@app.route("/modify", methods=['GET','POST'])
-def modify():
-    if not session['loggedIn']== True:
-        return redirect(url_for('login'))
-    return render_template('modify.html', title='Modify')
-
-
 @app.route("/constraints", methods=['GET','POST'])
 def constraints():
     if not session['loggedIn']== True:
@@ -134,7 +127,7 @@ def view():
         dictionary_day_class_list = convertSessionToStrings(ls_dictionary_day_class_list[i])
     #needs triple for loop for day of wk and class, and hr,
         ls_timeTable_in_pdframe,ls_rooms =create_list_pdFrame(dictionary_day_class_list)
-    
+
         list_of_week_type.append(convertPandasToHTML(ls_timeTable_in_pdframe))
 
     #need to make a list of them.
