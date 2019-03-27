@@ -57,19 +57,19 @@
   </head>
   <body>
 <div class="container">
-  <ul class="nav nav-tabs" role="tablist" id="og_tabs">
+  <ul class="nav nav-tabs"  id="og_tabs">
 
     {% for name in range((ls_names|length)) %}
-    <li role="presentation" ><a href="{{'#%s'%ls_names[name]}}"  role="tab" data-toggle="tab">{{ls_names[name]}}</a></li>
+    <li role="presentation" ><a href="{{'#%s'%ls_names[name]}}"  data-toggle="tab">{{ls_names[name]}}</a></li>
     {% endfor %}
   </ul>
   <div class="tab-content">
  
     {% for name in range((ls_names|length)) %}
         <div id = "{{'%s'%ls_names[name]}}" class="tab-pane">
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs" id="{{'#%s_tabs'%ls_names[name]}}" >
         {% for room in range((ls_rooms|length)) %}
-          <li role="presentation" ><a href="{{'#%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}"  role="tab" data-toggle="tab">{{ls_rooms[room]}}</a></li>
+          <li role="presentation" ><a href="{{'#%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}"  data-toggle="tab">{{ls_rooms[room]}}</a></li>
         {% endfor %} 
       </ul>
     </div>
@@ -80,7 +80,7 @@
     {% for name in range((ls_names|length)) %}
     <div class="tab-content" id ="{{'%s'%ls_names[name]}}">
         {% for room in range((ls_rooms|length)) %}
-        <div role = "tabpanel" class = "tab-pane fade" id="{{'%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}">{{list_of_week_type[name][room] | safe}}</div>
+        <div class = "tab-pane" id="{{'%s%s'%(ls_names[name],ls_rooms[room].replace('.',''))}}">{{list_of_week_type[name][room] | safe}}</div>
         {% endfor %} 
     </div>
     {% endfor %} 
@@ -141,5 +141,26 @@
   location.href="/";
   }
   </script>
+
+<script>
+$('#og_tabs').on('click', 'a[data-toggle="tab"]', function(e) {
+  e.preventDefault();
+
+  var $link = $(this);
+
+  if (!$link.parent().hasClass('active')) {
+
+    //remove active class from other tab-panes
+    $('.tab-content:not(.' + $link.attr('href').replace('#','') + ') .tab-pane').removeClass('active');
+
+    // click first submenu tab for active section
+    $('a[href="' + $link.attr('href') + '_all"][data-toggle="tab"]').click();
+
+    // activate tab-pane for active section
+    $('.tab-content.' + $link.attr('href').replace('#','') + ' .tab-pane:first').addClass('active');
+  }
+
+});
+</script>
 </body>
 </html>
