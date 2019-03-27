@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <title>constraints_View</title>
+  <style>
+  table{width:100%}
+  th,td{
+    border : 1px solid black;
+  }
+  th,td{
+    padding:5px;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <main>
+  <nav>
+   <ul class="nav_menu">
+      <li>
+       <a href="generate" class="menu-tap">
+         <div class="menu-tap_wrap">
+          Generate
+        </div>
+       </a>
+    </li>
+    <li>
+      <a href="modify" class="menu-tap">
+        <div class="menu-tap_wrap">
+          Modify
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="constraints" class="menu-tap menu-tap--selected">
+      <div class="menu-tap_wrap">
+      Constraints
+      </div>
+      </a>
+    </li>
+    <li>
+      <a href="view" class="menu-tap">
+        <div class="menu-tap_wrap">
+          View
+        </div>
+      </a>
+    </li>
+    <li>
+    <div class="space_logout"></div>
+    <button onclick="myFunction()">Logout</button>
+  </li>
+  </ul>
+  </nav>
+  <div class="logo">
+    Constraints
+  </div>
+  <section class="functions_constraints_view">
+  <center>
+  <span class="login_text">View Constraints</span>
+  </center>
+  <div class="container">
+  <ul class="nav nav-tabs">
+    <li class = "active"><a data-toggle="tab" href="#oneTime">OneTime</a></li>
+    <li><a data-toggle="tab" href="#Prof">Prof</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="oneTime" class="tab-pane fade in active">
+      <table border=1>
+        <tr>
+          <th>eventName</th>
+          <th>weekNo</th>
+          <th>DayOfWeek</th>
+          <th>StartTime</th>
+          <th>EndTime</th>
+          <th>Remove</th>
+          <th>Generate</th>
+        </tr>
+        <tr>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td><form><input type=button name="remove" value="Remove"></form></td>
+          <td><form><input type=button name="remove" value="Generate"></form></td>
+        </tr>
+    </table>
+    </div>
+    <div id="Prof" class="tab-pane fade">
+      <table>
+        <tr>
+          <th>eventName</th>
+          <th>weekNo</th>
+          <th>DayOfWeek</th>
+          <th>StartTime</th>
+          <th>EndTime</th>
+          <th>Remove</th>
+          <th>Generate</th>
+        </tr>
+        <tr>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td>    </td>
+          <td><form><input type=button name="remove" value="Remove"></form></td>
+          <td><form><input type=button name="remove" value="Generate"></form></td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+</section>
+  </main>
+
+    <footer>
+      <center>
+        <p class="space_footer"></p>
+      <hr>
+      &copy; eGenda 2019
+    </center>
+    </footer>
+    <script>
+    function myFunction() {
+    alert("Logout");
+    location.href="/";
+    }
+    </script>
+</body>
+</html>

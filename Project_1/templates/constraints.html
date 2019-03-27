@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <title>constraints</title>
+  <style>.constraints_space{height:250px;}</style>
 </head>
 <body>
 <main>
@@ -55,9 +56,10 @@
     <form>
       <input type="button" class="button" value="Add Prof/Weekly Constraints" onclick="location.href='constraint_Prof'">
       <input type="button" class="button" value="Add One Time Constraints" onclick="location.href='constraint_OneTime'">
-      <input type="button" class="button" value="View Constraints">
+      <input type="button" class="button" value="View Constraints" onclick="location.href='constraints_View'">
     </form>
   </center>
+  <div class="constraints_space"></div>
  </section>
   </main>
   <footer>

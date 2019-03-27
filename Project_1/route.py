@@ -118,7 +118,11 @@ def modify_public():
         return render_template('constraints.html', title='Constraint')
     return render_template('constraint_Prof.html', title='Constraint_Prof')
 
-
+@app.route("/constraints_View", methods=['GET','POST'])
+def constraints_view():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('constraints_View.html', title='Constraint_View')
 
 @app.route("/view", methods=['GET','POST'])
 def view():
