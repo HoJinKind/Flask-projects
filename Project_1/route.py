@@ -83,7 +83,7 @@ def modify_event():
             return render_template('constraint_OneTime.html', title='Constraint_OneTime')
         dataDict =[WeekNo,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8"),'eventName':eventName}}]
         readwritefromFB.appendToSingleConstraint(dataDict)
-        return render_template('constraints.html', title='Constraint_OneTime')
+        return redirect(url_for('constraints_view'))
     return render_template('constraint_OneTime.html', title='Constraint_OneTime')
 
 
@@ -108,7 +108,7 @@ def modify_public():
             return render_template('constraint_Prof.html', title='Constraint_Prof')
         dataDict =[profName,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8")}}]
         readwritefromFB.appendToProfConstraint(dataDict)
-        return render_template('constraints.html', title='Constraint')
+        return redirect(url_for('constraints_view'))
     return render_template('constraint_Prof.html', title='Constraint_Prof')
 
 @app.route("/constraints_View", methods=['GET','POST'])
