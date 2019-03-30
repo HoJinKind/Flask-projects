@@ -127,7 +127,7 @@ def constraints_view():
             oneTimeConstraints[week][day]['startTime'],oneTimeConstraints[week][day]['endTime']=convertTimeUnitsToRealTime(oneTimeConstraints[week][day])
     
     if request.method == 'POST':
-        if 'generate' in request.form:
+        if 'modify' in request.form:
             if request.form['modify'] == 'Modify':
                 #this works
                 if Modify.gen():
