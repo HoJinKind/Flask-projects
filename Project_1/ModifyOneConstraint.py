@@ -206,8 +206,11 @@ class ModifyOneConstraint:
 
     #purpose is to remove all classes which have clash now
     def consolidate_clashes(self,fbData): 
-        for room in fbData[self.constraint_day].keys():
-            for index in range(self.constraint_duration):
+        print(str(self.constraint_duration)+"blabla")
+        for index in range(self.constraint_duration):
+            print(str(self.constraint_duration)+"blabla")
+            for room in fbData[self.constraint_day].keys():
+            
                 #check if session, if yes, remove
                 if self.check_if_session(fbData[self.constraint_day][room][index]):
                     currentTimeSlot=fbData[self.constraint_day][room][index]
@@ -220,15 +223,25 @@ class ModifyOneConstraint:
                     currentTimeSlot=fbData[self.constraint_day][room][index]
                     #have to remove entire hass block
                     while currentTimeSlot=='hass':
-                        currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
-                        self.hasscount+=1   
-                        for layer_two_room in fbData[self.constraint_day].keys():                
-                            fbData[self.constraint_day][layer_two_room][self.hasscount+index]=u"available"
-                        currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+                        #check if next timeslot is also hass
+                        try:
+                            print(index+1000000)
+                            currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+                            
+                            for layer_two_room in self.dictOfRooms.keys():     
+                                #set to avail for all rooms           
+                                fbData[self.constraint_day][layer_two_room][self.hasscount+index]=u"available"
+                            self.hasscount+=1   
+                            #increase by 1
+                            
+                            currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+                        except IndexError as error:
+                            #breaking more than once
+                            break
 
                 fbData[self.constraint_day][room][index]=self.eventName
                    
-                                
+        print(str(self.hasscount)+'blablabla')               
         return fbData
      
     #purpose is to CONVERT to session again
