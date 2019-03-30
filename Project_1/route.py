@@ -115,7 +115,19 @@ def modify_public():
 def constraints_view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    return render_template('constraints_View.html', title='Constraint_View')
+    profConstraints = readwritefromFB.readfromfbProfConstraints()
+    for prof in profConstraints:
+        for day in profConstraints[prof]:
+            profConstraints[prof][day]['startTime'],profConstraints[prof][day]['endTime']=convertTimeUnitsToRealTime(profConstraints[prof][day])
+    
+    oneTimeConstraints=readwritefromFB.readfromfbOneTimeConstraints()
+    for week in oneTimeConstraints:
+        for day in oneTimeConstraints[week]:
+            oneTimeConstraints[week][day]['startTime'],oneTimeConstraints[week][day]['endTime']=convertTimeUnitsToRealTime(oneTimeConstraints[week][day])
+    
+    print(oneTimeConstraints)
+    print(profConstraints)
+    return render_template('constraints_View.html', title='Constraint_View', profConstraints=profConstraints,oneTimeConstraints=oneTimeConstraints)
 
 @app.route("/view", methods=['GET','POST'])
 def view():

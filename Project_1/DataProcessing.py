@@ -1,4 +1,6 @@
 import pandas as pd
+from datetime import *
+
 def create_list_pdFrame(fbDataTimeTable):
     list_pdFrame=[]
     ls_rooms=[]
@@ -41,3 +43,17 @@ def convertPandasToHTML(ls_timeTable_in_pdframe):
         room_example.rename(index={0:'8:30',1:'9:00',2:'9:30',3:'10:00',4:'10:30',5:'11:00',6:'11:30',7:'12:00',8:'12:30',9:'13:00',10:'13:30',11:'14:00',12:'14:30',13:'15:00',14:'15:30',15:'16:00',16:'16:30',17:'17:00', 18:'17:30'},inplace =True)
         room_example_html_list.append(room_example.to_html())
     return room_example_html_list
+
+def convertTimeUnitsToRealTime(dict):
+    
+        fmt = '%H:%M'
+        start=converter(int(dict['startTime']))
+        end=converter(int(dict['startTime'])+int(dict['duration']))
+        # time2  = datetime.strptime(endTime, fmt)
+        # firstClass= datetime.strptime('08:30', fmt)
+        return start,end
+
+def converter(timing):
+    converterDict={0:'8:30',1:'9:00',2:'9:30',3:'10:00',4:'10:30',5:'11:00',6:'11:30',7:'12:00',8:'12:30',9:'13:00',10:'13:30',11:'14:00',12:'14:30',13:'15:00',14:'15:30',15:'16:00',16:'16:30',17:'17:00', 18:'17:30',19:'18:00'}
+    returnTiming=converterDict[timing]
+    return returnTiming

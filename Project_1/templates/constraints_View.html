@@ -77,35 +77,44 @@
           <th>Remove</th>
           <th>Generate</th>
         </tr>
+
+        {%for week in oneTimeConstraints%}
+        {%for day in oneTimeConstraints[week]%}
         <tr>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
+          <td>  {{oneTimeConstraints[week][day]['eventName']}}  </td>
+          <td>  {{week}}   </td>
+          <td>  {{day}}   </td>
+          <td>   {{oneTimeConstraints[week][day]['startTime']}}  </td>
+          <td>  {{oneTimeConstraints[week][day]['endTime']}}  </td>
           <td><form><input type=button name="remove" value="Remove"></form></td>
           <td><form><input type=button name="generate" value="Generate"></form></td>
         </tr>
+
+        {%endfor%}
+        {%endfor%}
     </table>
     </div>
     <div id="Prof" class="tab-pane fade">
       <table>
         <tr>
-          <th>eventName</th>
-          <th>weekNo</th>
+          <th>profName</th>
           <th>DayOfWeek</th>
           <th>StartTime</th>
           <th>EndTime</th>
           <th>Remove</th>
         </tr>
+
+        {%for prof in profConstraints%}
+        {%for dayOfWeek in profConstraints[prof]%}
         <tr>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
-          <td>    </td>
+          <td>{{prof}}</td>
+          <td>{{dayOfWeek }}</td>
+          <td>   {{profConstraints[prof][dayOfWeek]['startTime']}} </td>
+          <td> {{profConstraints[prof][dayOfWeek]['endTime']}} </td>
           <td><form><input type=button name="remove" value="Remove"></form></td>
         </tr>
+        {%endfor%}
+        {%endfor%}
     </table>
     <br>
     <br>

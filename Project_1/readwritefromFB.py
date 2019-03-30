@@ -23,6 +23,17 @@ def readfromfbProfConstraints():
         dict_prof_constraints[doct.id]=temp_dict
     return dict_prof_constraints
 
+
+def readfromfbOneTimeConstraints():
+    doc_ref = dbfs.collection(u'single_constraints').get()
+
+    single_constraints={}
+    for doct in doc_ref:
+        temp_dict = doct.to_dict()
+        single_constraints[doct.id]=temp_dict
+    return single_constraints
+
+
 def readfromfb():
     doc_ref = dbfs.collection(u'dummy').get()
 
