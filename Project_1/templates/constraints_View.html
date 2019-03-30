@@ -19,6 +19,7 @@
     padding:5px;
     text-align: center;
   }
+  #generate_button_constraints{float: right; margin-right: 65px; height:70px;}
   </style>
 </head>
 <body>
@@ -83,7 +84,7 @@
           <td>    </td>
           <td>    </td>
           <td><form><input type=button name="remove" value="Remove"></form></td>
-          <td><form><input type=button name="remove" value="Generate"></form></td>
+          <td><form><input type=button name="generate" value="Generate"></form></td>
         </tr>
     </table>
     </div>
@@ -96,7 +97,6 @@
           <th>StartTime</th>
           <th>EndTime</th>
           <th>Remove</th>
-          <th>Generate</th>
         </tr>
         <tr>
           <td>    </td>
@@ -105,9 +105,11 @@
           <td>    </td>
           <td>    </td>
           <td><form><input type=button name="remove" value="Remove"></form></td>
-          <td><form><input type=button name="remove" value="Generate"></form></td>
         </tr>
     </table>
+    <br>
+    <br>
+    <form><input type=button name="generate" id="generate_button_constraints" value="Generate"></form>
     </div>
 </div>
 
