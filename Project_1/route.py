@@ -125,8 +125,34 @@ def constraints_view():
         for day in oneTimeConstraints[week]:
             oneTimeConstraints[week][day]['startTime'],oneTimeConstraints[week][day]['endTime']=convertTimeUnitsToRealTime(oneTimeConstraints[week][day])
     
-    print(oneTimeConstraints)
-    print(profConstraints)
+    if request.method == 'POST':
+        if 'generate' in request.form:
+            if request.form['generate'] == 'Generate':
+                #this works
+                if Modify.gen():
+                    return redirect(url_for('view'))
+                else:
+                    return redirect(url_for('constraints_view'))
+        for prof in profConstraints:
+            for day in profConstraints[prof]:
+                if '%s,%s'%(prof,day) in request.form:
+                    if request.form['%s,%s'%(prof,day)] == 'Remove':
+                        #do smth
+                        readwritefromFB.eraseOneProfConstraint([prof,day])
+                        return redirect(url_for('constraints_view'))
+        for week in oneTimeConstraints:
+            for day in oneTimeConstraints[week]:
+                if '%s,%s'%(week,day) in request.form:
+                    if request.form['%s,%s'%(week,day)] == 'Remove':
+                        #this works
+                        readwritefromFB.eraseOneTimeConstraint([week,day])
+                        return redirect(url_for('constraints_view'))
+                    elif request.form['%s,%s'%(week,day)] == 'Generate':
+                        
+                        #dosmth] == 'Generate':
+                        #dosmth
+                        return redirect(url_for('view'))
+                    
     return render_template('constraints_View.html', title='Constraint_View', profConstraints=profConstraints,oneTimeConstraints=oneTimeConstraints)
 
 @app.route("/view", methods=['GET','POST'])

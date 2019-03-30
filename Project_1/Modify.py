@@ -17,8 +17,10 @@ class modify:
         
         if success:
             self.prepareForFirebase()#if fail, wont change
+            self.success = True
         else:
             print('failed')
+            self.success = False
 
     #converts object chromosome to dictionary, to store in database
     def prepareForFirebase(self):
@@ -91,7 +93,7 @@ class modify:
     def findRandomTimeSlot(self,duration):
         #find random timeslot for session
         days=['monday','tuesday','wednesday','thursday','friday']
-        return (randint(0,19-duration-1),choice(days))
+        return (randint(ernest0,19-duration-1),choice(days))
 
 
 
@@ -205,4 +207,5 @@ def gen():
     dict_prof_constraints= readwritefromFB.readfromfbProfConstraints()#needed
     raw_rooms_timetable= readwritefromFB.readfromfbTimeTable()[1][0]
     print(dict_prof_constraints)
-    modify(raw_rooms_timetable,dict_prof_constraints,room_dict)
+    modifier=modify(raw_rooms_timetable,dict_prof_constraints,room_dict)
+    return modifier.success

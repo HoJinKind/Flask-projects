@@ -90,3 +90,18 @@ def appendToSingleConstraint(data):
 def appendToProfConstraint(data):
     doc_ref=dbfs.collection('prof_constraints').document(data[0])
     doc_ref.set(data[1],merge=True)         
+
+
+def eraseOneTimeConstraint(data):
+    doc_ref = dbfs.collection(u'single_constraints').document(data[0])
+    doc_ref.update({
+        data[1]: firestore.DELETE_FIELD
+    })
+    if dbfs.collection(u'timetable').document(data[0]).get().exists:
+        dbfs.collection(u'timetable').document(data[0]).delete()
+
+def eraseOneProfConstraint(data):
+    doc_ref = dbfs.collection(u'prof_constraints').document(data[0])
+    doc_ref.update({
+        data[1]: firestore.DELETE_FIELD
+    })
