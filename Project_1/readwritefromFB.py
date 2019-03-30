@@ -79,8 +79,12 @@ def auth(username,password):
 
 #updating firebase stuff
 
-def updateTimetable(data):
-    doc_ref = dbfs.collection(u'timetable').document(u'finalised')
+def updateTimetable(data,table=u'finalised'):
+    if table==u'finalised':
+        docs=dbfs.collection(u'timetable').get()
+        for doc in docs:
+            doc.reference.delete()
+    doc_ref = dbfs.collection(u'timetable').document(table)
     doc_ref.set(data)
 
 def appendToSingleConstraint(data):

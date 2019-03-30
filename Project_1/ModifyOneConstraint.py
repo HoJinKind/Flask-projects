@@ -3,16 +3,23 @@ import chromosome
 import copy
 from random import random, choice, randint
 #generates the finalised timetable, given all the constraints. if it fails, return all avail, unfiled timetable
-class modify:
-    def __init__(self,raw_rooms_timetable,new_prof_constraints,dictOfRooms):
+class ModifyOneConstraint:
+    def __init__(self,raw_rooms_timetable,prof_constraints,dict_one_constraint,dictOfRooms):
         self.dictOfRooms = dictOfRooms
-        self.profConstraints =new_prof_constraints
+        self.profConstraints =prof_constraints
+        self.dict_one_constraint =dict_one_constraint
         self.lsOfSessions=[]
+        self.hasscount=0
+        self.eventName = dict_one_constraint['eventName']
+        self.constraint_duration = int(dict_one_constraint['duration'])
         self.rooms_timetable = self.generate_rooms_timetable(raw_rooms_timetable)
 
+        self.constraint_day = dict_one_constraint['day']
+        self.constraint_startTime = int(dict_one_constraint['startTime'])
+        self.week = dict_one_constraint['week']
         self.rooms_timetable=self.consolidate_clashes(self.rooms_timetable)
-        print(self.lsOfSessions)
-
+        self.fillInNewHass()
+        
         success = self.populate_timetable()#if fail?
         
         if success:
@@ -29,9 +36,9 @@ class modify:
         for day in tempTimeTable:
             for room in tempTimeTable[day]:
                 for index in range(len(tempTimeTable[day][room])):
-                    if not( tempTimeTable[day][room][index] == 'available' or tempTimeTable[day][room][index] == 'generic' or tempTimeTable[day][room][index] == 'hass'  ):
+                    if not( tempTimeTable[day][room][index] in ['available','generic','hass',self.eventName]  ):
                         tempTimeTable[day][room][index] = vars(tempTimeTable[day][room][index])
-        readwritefromFB.updateTimetable(tempTimeTable)
+        readwritefromFB.updateTimetable(tempTimeTable,self.week)
 
 
     def populate_timetable(self):
@@ -96,17 +103,43 @@ class modify:
         return (randint(0,19-duration-1),choice(days))
 
 
+    def fillInNewHass(self):
+        a=0
+        fufilled=False
+        while not fufilled:
+            a+=1
+            if a==10000:
+                return False
+            tempStartTime,dayOfWeek=self.findRandomTimeSlot(self.hasscount)
+            fufilled = self.check_all_room_clear(tempStartTime,dayOfWeek)
+        self.insertNewHassTiming(dayOfWeek,self.hasscount,tempStartTime)
+        return True
 
 
+    def check_all_room_clear(self,startTime,day):
+    #check if all rooms  clear , for the block, then we can put in hass
+        for room in self.dictOfRooms.keys():
+            for period in range(self.hasscount):
+                if not self.rooms_timetable[day][room][startTime+period] in ['available','generic'] :
+                    return False
+        return True
 
+    def insertNewHassTiming(self,day,duration,startTime):
 
-
+        for room in self.dictOfRooms.keys():
+                #for each class room , for that day, block out the timing
+                #print(self.rooms_timetable['friday']['2.505'])
+            for durations in range(duration):
+                print(durations)
+                self.rooms_timetable[day][room][durations+startTime]=u"hass"
+                print('inserting for' +room)
+                   
     
     def  check_room_available(self,room,duration,startTime,day):
         #check if for a specific day, time, room is available,m else, run the check for plus minus timing
         #make sure start not too late
         for i in range(duration):
-            if not self.rooms_timetable[day][room][startTime+i] == 'available':
+            if not self.rooms_timetable[day][room][startTime+i] in ['available','generic']:
                 print('room return false')
                 return False
         print('room return true')
@@ -133,9 +166,9 @@ class modify:
             #cycle thru time
             for room in self.rooms_timetable[day].keys():
                 #cycle thru rooms
-                if self.rooms_timetable[day][room][starttime+time]=='available':
+                if self.rooms_timetable[day][room][starttime+time] in ['available','generic']:
                     pass
-                elif self.rooms_timetable[day][room][starttime+time]=='generic' or  self.rooms_timetable[day][room][starttime+time]=='hass':
+                elif self.rooms_timetable[day][room][starttime+time]==self.rooms_timetable[day][room][starttime+time] in [self.eventName,'hass']:
                     return False
                 else:
                     #for list of profs, teaching in the same  hr
@@ -157,36 +190,47 @@ class modify:
             #cycle thru time
             for key in self.rooms_timetable[day]:
                 #cycle thru rooms
-                if self.rooms_timetable[day][key][starttime+time]=='available':
+                if self.rooms_timetable[day][key][starttime+time] in ['available','generic']:
                     pass
-                elif self.rooms_timetable[day][key][starttime+time]=='generic' or  self.rooms_timetable[day][key][starttime+time]=='hass':
+                #sneak in event name here
+                elif self.rooms_timetable[day][key][starttime+time] in [self.eventName,'hass']:
                     return False
                 else:
                     for cohort in self.rooms_timetable[day][key][starttime+time].cohortID:
                     #cycle thru list of cohorts
                         for cohortInQuestion in cohortsInQuestion:
                             if cohort == cohortInQuestion:
-                                print('stu return false')
                                 return False
         return True
 
 
-    #purpose is to remove alll classes which have clash now
+    #purpose is to remove all classes which have clash now
     def consolidate_clashes(self,fbData): 
-        for day in fbData.keys():
-            for room in fbData[day].keys():
-                for index in range(len(fbData[day][room])):
-                    if self.check_if_session(fbData[day][room][index]):
-                        currentTimeSlot=fbData[day][room][index]
-                    
-                        if not self.check_prof_constraints(currentTimeSlot.profs,currentTimeSlot.duration,day,currentTimeSlot.startTime):
-                           
-                            self.lsOfSessions.append(currentTimeSlot)
-                            for duration in range(currentTimeSlot.duration):#remove from master copy
-                                fbData[day][room][duration+index]=u"available"
+        for room in fbData[self.constraint_day].keys():
+            for index in range(self.constraint_duration):
+                #check if session, if yes, remove
+                if self.check_if_session(fbData[self.constraint_day][room][index]):
+                    currentTimeSlot=fbData[self.constraint_day][room][index]
+                        
+                    self.lsOfSessions.append(currentTimeSlot)
+                    for duration in range(currentTimeSlot.duration):#remove from master copy
+                        fbData[self.constraint_day][room][duration+index]=u"available"
+                
+                if fbData[self.constraint_day][room][index] == 'hass':
+                    currentTimeSlot=fbData[self.constraint_day][room][index]
+                    #have to remove entire hass block
+                    while currentTimeSlot=='hass':
+                        currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+                        self.hasscount+=1   
+                        for layer_two_room in fbData[self.constraint_day].keys():                
+                            fbData[self.constraint_day][layer_two_room][self.hasscount+index]=u"available"
+                        currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+
+                fbData[self.constraint_day][room][index]=self.eventName
+                   
                                 
         return fbData
-
+     
     #purpose is to CONVERT to session again
     def generate_rooms_timetable(self,fbData):
         for day in fbData.keys():
@@ -197,15 +241,14 @@ class modify:
         return fbData
         
     def check_if_session(self,data):
-        if data == 'available' or data == 'generic' or data == 'hass':
+        if data == 'available' or data == 'generic' or data == 'hass' or data == self.eventName:
             return False
         return True
 
-def gen():
+def gen(dict_one_constraint):
     #get data required from firebase, then run.
     room_dict=readwritefromFB.readfromfbRoom()
-    dict_prof_constraints= readwritefromFB.readfromfbProfConstraints()#needed
+    dict_prof_constraints= readwritefromFB.readfromfbProfConstraints()
     raw_rooms_timetable= readwritefromFB.readfromfbTimeTable()[1][0]
-    print(dict_prof_constraints)
-    modifier=modify(raw_rooms_timetable,dict_prof_constraints,room_dict)
+    modifier=ModifyOneConstraint(raw_rooms_timetable,dict_prof_constraints,dict_one_constraint,room_dict)
     return modifier.success

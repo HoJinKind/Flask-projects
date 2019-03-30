@@ -1,4 +1,5 @@
 import Modify
+import ModifyOneConstraint
 from flask import Flask , request, jsonify, render_template,redirect,url_for,session
 import pandas as pd
 import readwritefromFB
@@ -127,7 +128,7 @@ def constraints_view():
     
     if request.method == 'POST':
         if 'generate' in request.form:
-            if request.form['generate'] == 'Generate':
+            if request.form['modify'] == 'Modify':
                 #this works
                 if Modify.gen():
                     return redirect(url_for('view'))
@@ -148,7 +149,11 @@ def constraints_view():
                         readwritefromFB.eraseOneTimeConstraint([week,day])
                         return redirect(url_for('constraints_view'))
                     elif request.form['%s,%s'%(week,day)] == 'Generate':
-                        
+                        dict_one_constraint=readwritefromFB.readfromfbOneTimeConstraints()[week][day]
+                        dict_one_constraint['day']=day
+                        dict_one_constraint['week']=week
+                        dict_one_constraint['eventName']=oneTimeConstraints[week][day]['eventName']
+                        ModifyOneConstraint.gen(dict_one_constraint)
                         #dosmth] == 'Generate':
                         #dosmth
                         return redirect(url_for('view'))
