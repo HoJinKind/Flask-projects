@@ -8,10 +8,12 @@ class generate1:
         self.dictOfRooms = dictOfRooms
         self.lsOfSessions = lsOfSessions
         self.profConstraints =dict_prof_constraints
+        self.profsPriority={}
         self.nineteentAvail = [u'available' for i in range(19)]
         self.rooms_timetable={}
+        self.SetPriorityOfProfs()
+        self.setPriorityValueForSession()
         self.generate_rooms_timetable()
-        
         self.fill_in_hass_and_weekly()
         success = self.populate_timetable()
         if success:
@@ -21,6 +23,7 @@ class generate1:
             self.rooms_timetable={}
             self.generate_rooms_timetable()
             self.prepareForFirebase()
+        
     #converts object chromosome to dictionary, to store in database
     def prepareForFirebase(self):
         #transform all session objects to dictionary
@@ -31,8 +34,21 @@ class generate1:
                     if not( tempTimeTable[day][room][index] == 'available' or tempTimeTable[day][room][index] == 'generic' or tempTimeTable[day][room][index] == 'hass'  ):
                         tempTimeTable[day][room][index] = vars(tempTimeTable[day][room][index])
         readwritefromFB.updateTimetable(tempTimeTable)
+    #this is for setting priority of profs, so we can then set priority of sessions
+    def SetPriorityOfProfs(self):
+        for prof in self.profConstraints.keys():
+            for day in self.profConstraints[prof].keys():
+                if prof in self.profsPriority:
+                    self.profsPriority[prof]+=int(self.profConstraints[prof][day]["duration"])
+                else:
+                    self.profsPriority[prof]=int(self.profConstraints[prof][day]["duration"])
 
-
+    
+    def setPriorityValueForSession(self):
+        for session in self.lsOfSessions:
+            for prof in session.profs:
+                if prof in self.profsPriority.keys():
+                    session.priority=max(session.priority,self.profsPriority[prof])
     def populate_timetable(self):
         for session in self.lsOfSessions:
             fufilled = False

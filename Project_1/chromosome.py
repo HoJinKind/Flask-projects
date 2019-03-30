@@ -17,6 +17,7 @@ class session:
             self.sessionid=dicti['sessionid']
             self.duration=dicti['duration']
             self.startTime=dicti['startTime']
+
         else:
             self.roomtype = dicti['location']
             duration_holder= int(float(dicti['duration'])*2)
@@ -32,6 +33,7 @@ class session:
 
             self.sessionid =session.session_count
             session.session_count+=1
+        self.priority=0
 
     def __str__(self):
         return ' '.join(str(v) for v in ["sessionid:",self.sessionid,
