@@ -49,37 +49,44 @@ class generate1:
             for prof in session.profs:
                 if prof in self.profsPriority.keys():
                     session.priority=max(session.priority,self.profsPriority[prof])
+        self.lsOfSessions.sort(key=lambda x: x.priority, reverse = True) 
     def populate_timetable(self):
         for session in self.lsOfSessions:
             fufilled = False
-            a=0
-            while not fufilled:
-                a+=1
-                if a==10000:
-                    return False
-                #type of room has to be chosen
+            count=0
+            while fufilled == False:
                 tempRoom=self.findRandomRoom(self.dictOfRooms,session.roomtype)
-                tempStartTime,dayOfWeek=self.findRandomTimeSlot(session.duration)
-                print(tempStartTime,dayOfWeek,fufilled)
-                #this is where the checks are
-                fufilled = (self.check_prof_available(session.duration,
-                                tempStartTime,
-                                dayOfWeek,
-                                session.profs) and
-                            self.check_room_available(tempRoom,
-                                session.duration,
-                                tempStartTime,
-                                dayOfWeek) and
-                            self.check_students_available(session.duration,
-                                tempStartTime,
-                                dayOfWeek,
-                                session.cohortID) and
-                            self.check_prof_constraints(session.profs,
-                                session.duration,
-                                dayOfWeek,
-                                tempStartTime))
-                session.startTime= tempStartTime
+                count+=1
+                if count==10:
+                    return False
+                for tempStartTime in range(19-session.duration):
+                    for dayOfWeek in self.rooms_timetable.keys():
+                        #type of room has to be chosen
+                        #tempStartTime,dayOfWeek=self.findRandomTimeSlot(session.duration)
+                        print(tempStartTime,dayOfWeek,fufilled)
+                        #this is where the checks are
+                        fufilled = (self.check_prof_available(session.duration,
+                                        tempStartTime,
+                                        dayOfWeek,
+                                        session.profs) and
+                                    self.check_room_available(tempRoom,
+                                        session.duration,
+                                        tempStartTime,
+                                        dayOfWeek) and
+                                    self.check_students_available(session.duration,
+                                        tempStartTime,
+                                        dayOfWeek,
+                                        session.cohortID) and
+                                    self.check_prof_constraints(session.profs,
+                                        session.duration,
+                                        dayOfWeek,
+                                        tempStartTime))
+                        if fufilled ==True:
+                            break
+                    if fufilled == True:
+                        break
             self.insertSession(session,tempStartTime,session.duration,dayOfWeek,tempRoom)
+           
         return True
 
 
@@ -87,14 +94,10 @@ class generate1:
 
 
     def insertSession(self,session,startTime,duration,day,room):
-        print('impt! inserting sessionID',session.sessionid,session.subject)
-        print(duration,'This is duration',startTime)
+        session.startTime = startTime
         for half_hour_block in range(duration):
-            print('input into table',half_hour_block,room)
-            print(room in self.rooms_timetable[day].keys())
             self.rooms_timetable[day][room][startTime+half_hour_block]=session
-            print(123,self.rooms_timetable[day][room])
-            print(vars(session))
+          
 
 
     def findRandomRoom(self,dict_room,room_needed):
@@ -177,7 +180,6 @@ class generate1:
     def check_prof_constraints(self,profsInQuestion,duration,day,startTime):
         for classTiming in range(startTime,startTime+duration):
             for profInQuestion in profsInQuestion:
-                print(self.profConstraints)
                 if profInQuestion in self.profConstraints.keys():
                     if day in self.profConstraints[profInQuestion].keys():
                         constraintStartTime=int(self.profConstraints[profInQuestion][day]['startTime'])
@@ -204,7 +206,6 @@ class generate1:
                     #for list of profs, teaching in the same  hr
                     for prof in self.rooms_timetable[day][room][starttime+time].profs:
                     #cycle thru list of profs
-                        print(str(profsInQuestion)+"heyhey")
                         print(self.rooms_timetable[day][room][starttime+time].profs)
                         for profInQuestion in profsInQuestion:
                             #cycle thru list of profs in current session

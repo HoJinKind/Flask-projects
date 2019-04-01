@@ -205,10 +205,10 @@ class ModifyOneConstraint:
 
 
     #purpose is to remove all classes which have clash now
-    def consolidate_clashes(self,fbData): 
-        print(str(self.constraint_duration)+"blabla")
-        for index in range(self.constraint_duration):
-            print(str(self.constraint_duration)+"blabla")
+    def consolidate_clashes(self,fbData):
+        
+        for index in range(self.constraint_startTime,self.constraint_startTime+self.constraint_duration):
+            
             for room in fbData[self.constraint_day].keys():
             
                 #check if session, if yes, remove
@@ -217,16 +217,17 @@ class ModifyOneConstraint:
                         
                     self.lsOfSessions.append(currentTimeSlot)
                     for duration in range(currentTimeSlot.duration):#remove from master copy
-                        fbData[self.constraint_day][room][duration+index]=u"available"
+                        fbData[self.constraint_day][room][duration+currentTimeSlot.startTime]=u"available"
                 
                 if fbData[self.constraint_day][room][index] == 'hass':
-                    currentTimeSlot=fbData[self.constraint_day][room][index]
+                    currentTimeSlotUp=fbData[self.constraint_day][room][index-1]
+                    currentTimeSlotDown=fbData[self.constraint_day][room][index]
                     #have to remove entire hass block
-                    while currentTimeSlot=='hass':
+                    while currentTimeSlotDown=='hass':
                         #check if next timeslot is also hass
                         try:
                             print(index+1000000)
-                            currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+                            currentTimeSlotDown=fbData[self.constraint_day][room][index+self.hasscount]
                             
                             for layer_two_room in self.dictOfRooms.keys():     
                                 #set to avail for all rooms           
@@ -234,10 +235,29 @@ class ModifyOneConstraint:
                             self.hasscount+=1   
                             #increase by 1
                             
-                            currentTimeSlot=fbData[self.constraint_day][room][index+self.hasscount]
+                            currentTimeSlotDown=fbData[self.constraint_day][room][index+self.hasscount]
                         except IndexError as error:
                             #breaking more than once
                             break
+                    hasscount2=1
+                    while currentTimeSlotUp=='hass' and not (index-hasscount2+1)==0:
+                        #check if next timeslot is also hass
+                        try:
+                            print(index+1000000)
+                            currentTimeSlotUp=fbData[self.constraint_day][room][index-hasscount2]
+                            
+                            for layer_two_room in self.dictOfRooms.keys():     
+                                #set to avail for all rooms           
+                                fbData[self.constraint_day][layer_two_room][-hasscount2+index]=u"available"
+                            hasscount2+=1   
+                            #increase by 1
+                            
+                            currentTimeSlotUp=fbData[self.constraint_day][room][index-hasscount2]
+                        except IndexError as error:
+                            #breaking more than once
+                            break
+                    self.hasscount+=hasscount2-1
+                    
 
                 fbData[self.constraint_day][room][index]=self.eventName
                    
