@@ -47,6 +47,8 @@ def room():
             roomName=request.form['roomName']
 
             readwritefromFB.AddRoom([roomName,roomtype])
+
+            return redirect(url_for('room'))
     return render_template('room.html', title='Room',rooms=rooms)
 
 @app.route("/generate", methods=['GET','POST'])
