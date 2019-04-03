@@ -34,6 +34,14 @@ def home():
 
     return render_template('home.html', title='Home')
 
+
+@app.route("/room", methods=['GET','POST'])
+def room():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+
+    return render_template('room.html', title='Room')
+
 @app.route("/generate", methods=['GET','POST'])
 def generate():
     if not session['loggedIn']== True:
