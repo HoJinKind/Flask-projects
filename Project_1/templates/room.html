@@ -5,6 +5,16 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
   <title>Room</title>
+  <style>
+  table{
+    width: 400px;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  .table_view_room{
+    border : 1px solid black;
+  }
+  </style>
 </head>
 <body>
   <main>
@@ -68,16 +78,16 @@
       </div></td>
       <td><div class="room_view">
         <form>
-        <table border=1>
+        <table>
           <tr>
-            <th>Room Name</th>
-            <th>Room Type</th>
+            <th class="table_view_room">Room Name</th>
+            <th class="table_view_room">Room Type</th>
           </tr>
-            
+
             {%for room in rooms%}
             <tr>
-              <td>{{room}}</td>
-              <td>{{rooms[room]}}</td>
+              <td class="table_view_room">{{room}}</td>
+              <td class="table_view_room">{{rooms[room]}}</td>
             </tr>
             {%endfor%}
         </table>
