@@ -39,8 +39,15 @@ def home():
 def room():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
+    rooms=readwritefromFB.readfromfbRoom()
+    if request.method == 'POST':
 
-    return render_template('room.html', title='Room')
+        if request.form['add'] == 'add':
+            roomtype=request.form['roomType']
+            roomName=request.form['roomName']
+
+            readwritefromFB.AddRoom([roomName,roomtype])
+    return render_template('room.html', title='Room',rooms=rooms)
 
 @app.route("/generate", methods=['GET','POST'])
 def generate():

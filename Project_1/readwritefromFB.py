@@ -109,3 +109,7 @@ def eraseOneProfConstraint(data):
     doc_ref.update({
         data[1]: firestore.DELETE_FIELD
     })
+
+def AddRoom(data):
+    doc_ref = dbfs.collection(u'rooms').document('ISTDT4')
+    doc_ref.set({data[0]:data[1]},merge=True)
