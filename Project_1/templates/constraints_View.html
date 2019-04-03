@@ -66,6 +66,7 @@
   <ul class="nav nav-tabs">
     <li class = "active"><a data-toggle="tab" href="#oneTime">OneTime</a></li>
     <li><a data-toggle="tab" href="#Prof">Prof</a></li>
+    <li><a data-toggle="tab" href="#hardConstraints">Hard Constraints</a></li>
   </ul>
   <div class="tab-content">
     <div id="oneTime" class="tab-pane fade in active">
@@ -95,6 +96,26 @@
         {%endfor%}
 
     </table>
+    </div>
+    <div id="hardConstraints" class="tab-pane fade">
+      <table>
+        <tr>
+          <th>Constraint</th>
+          <th>DayOfWeek</th>
+          <th>StartTime</th>
+          <th>EndTime</th>
+        </tr>
+
+        {%for constraint in hardConstraints%}
+        <tr>
+          <th>{{constraint['event']}}</th>
+          <th>{{constraint['day']}}</th>
+          <th>{{constraint['startTime']}}</th>
+          <th>{{constraint['endTime']}}</th>
+        </tr>
+
+        {%endfor%}
+        </table>
     </div>
     <div id="Prof" class="tab-pane fade">
       <table>

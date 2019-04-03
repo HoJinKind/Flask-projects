@@ -108,7 +108,7 @@ def modify_public():
             print('failed')
             return render_template('constraint_Prof.html', title='Constraint_Prof')
         dataDict =[profName,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8")}}]
-        readwritefromFB.appendToProfConstraint(dataDict)
+        readwritefromFB.appendToProfConstraint(dataDict) 
         return redirect(url_for('constraints_view'))
     return render_template('constraint_Prof.html', title='Constraint_Prof')
 
@@ -116,16 +116,28 @@ def modify_public():
 def constraints_view():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
+        #convert time to date time
     profConstraints = readwritefromFB.readfromfbProfConstraints()
     for prof in profConstraints:
         for day in profConstraints[prof]:
             profConstraints[prof][day]['startTime'],profConstraints[prof][day]['endTime']=convertTimeUnitsToRealTime(profConstraints[prof][day])
     
+        #convert time to date time
     oneTimeConstraints=readwritefromFB.readfromfbOneTimeConstraints()
     for week in oneTimeConstraints:
         for day in oneTimeConstraints[week]:
             oneTimeConstraints[week][day]['startTime'],oneTimeConstraints[week][day]['endTime']=convertTimeUnitsToRealTime(oneTimeConstraints[week][day])
-    
+    genericConstraints,hassConstraints= readwritefromFB.readHassAndWeeklyConstraints()
+    lsHardConstraints=[]
+    for day in hassConstraints:    
+        tempdict={'event':'hass','day':day}
+        tempdict['startTime'],tempdict['endTime']= convertTimeUnitsToRealTime(hassConstraints[day])
+        lsHardConstraints.append(tempdict)
+    for day in genericConstraints:    
+        tempdict={'event':'generic','day':day}
+        tempdict['startTime'],tempdict['endTime']= convertTimeUnitsToRealTime(genericConstraints[day])
+        lsHardConstraints.append(tempdict)
+
     if request.method == 'POST':
         if 'modify' in request.form:
             if request.form['modify'] == 'Modify':
@@ -158,7 +170,7 @@ def constraints_view():
                         #dosmth
                         return redirect(url_for('view'))
                     
-    return render_template('constraints_View.html', title='Constraint_View', profConstraints=profConstraints,oneTimeConstraints=oneTimeConstraints)
+    return render_template('constraints_View.html', title='Constraint_View', profConstraints=profConstraints,oneTimeConstraints=oneTimeConstraints,hardConstraints=lsHardConstraints)
 
 @app.route("/view", methods=['GET','POST'])
 def view():

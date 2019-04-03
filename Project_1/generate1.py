@@ -15,8 +15,8 @@ class generate1:
         self.setPriorityValueForSession()
         self.generate_rooms_timetable()
         self.fill_in_hass_and_weekly()
-        success = self.populate_timetable()
-        if success:
+        self.success = self.populate_timetable()
+        if self.success:
             self.prepareForFirebase()
         else:
             self.nineteentAvail = [u'available' for i in range(19)]
@@ -244,4 +244,4 @@ def gen():
     dict_prof_constraints= readwritefromFB.readfromfbProfConstraints()
     print(dict_prof_constraints)
     firstGeneration=generate1(ls_chromosome,room_dict,dict_prof_constraints)
-    return firstGeneration.rooms_timetable
+    return firstGeneration.success
