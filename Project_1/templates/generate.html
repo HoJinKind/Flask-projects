@@ -5,7 +5,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <title>generate</title>
-  <style>.generate_space{height:100px;}</style>
+  <style>
+  .generate_space{height:130px;}
+  #generate_button{height:70px;}
+  </style>
 </head>
 <body>
   <main>
@@ -54,16 +57,9 @@
   <br>
   <br>
   <br>
-  <form>
-    <p>Choose a pillar</p>
-    <select name="pillar">
-    <option value="-">-
-    <option value="HASS">HASS
-    <option value="ISTD">ISTD</select>
-  </form>
-<br>
+  <br>
     <form method="POST" >
-      <input type="submit" name="Generate1" value="Generate1">
+      <input type="submit" name="Generate1" id="generate_button"value="Generate1">
   </form>
   </center>
   <div class="generate_space"></div>
