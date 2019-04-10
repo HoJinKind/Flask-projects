@@ -27,10 +27,10 @@ public class GenerateTest {
 	  
 	  @Test
 	  public void testAccessHomePageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
+		  
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -43,7 +43,7 @@ public class GenerateTest {
 
 			Thread.sleep(3000);
 			
-		    driver.get("http://127.0.0.1:5000/generate");
+		    driver.get("http://35.198.199.181:5000/generate");
 		    assertEquals ("generate", driver.getTitle());
 		    driver.findElement(By.name("Generate1")).click();
 		    

@@ -25,7 +25,7 @@ public class Login_failed_InvalidInput {
   public void testNotValidInput() throws Exception {
 	String user = "tomtom";
 	String pwd= "sutd124";
-    driver.get("http://127.0.0.1:5000/");
+    driver.get("http://35.198.199.181:5000/");
     driver.findElement(By.name("username")).click();
     driver.findElement(By.name("username")).clear();
     driver.findElement(By.name("username")).sendKeys(user);
@@ -36,13 +36,15 @@ public class Login_failed_InvalidInput {
     assertNotNull(pwd);
     assertEquals ("sutd1234", pwd);
     driver.findElement(By.name("pd")).sendKeys(Keys.ENTER);
+    Thread.sleep(2000);
+    assertEquals ("home", driver.getTitle());
   }
   
   @Test
   public void testNoInput() throws Exception {
 	String user = "";
 	String pwd= "";
-    driver.get("http://127.0.0.1:5000/");
+    driver.get("http://35.198.199.181:5000/");
     driver.findElement(By.name("username")).click();
     driver.findElement(By.name("username")).clear();
     driver.findElement(By.name("username")).sendKeys(user);
@@ -53,6 +55,8 @@ public class Login_failed_InvalidInput {
     assertNotNull(pwd);
     assertEquals ("sutd1234", pwd);
     driver.findElement(By.name("pd")).sendKeys(Keys.ENTER);
+    Thread.sleep(2000);
+    assertEquals ("home", driver.getTitle());
   }
   
   

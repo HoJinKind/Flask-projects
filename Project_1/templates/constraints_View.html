@@ -91,11 +91,11 @@
         {%for week in oneTimeConstraints%}
           {%for day in oneTimeConstraints[week]%}
             <tr>
-              <td>  {{oneTimeConstraints[week][day]['eventName']}}  </td>
-              <td>  {{week}}   </td>
-              <td>  {{day}}   </td>
-              <td>   {{oneTimeConstraints[week][day]['startTime']}}  </td>
-              <td>  {{oneTimeConstraints[week][day]['endTime']}}  </td>
+              <td class="table_view_constraints">  {{oneTimeConstraints[week][day]['eventName']}}  </td>
+              <td class="table_view_constraints">  {{week}}   </td>
+              <td class="table_view_constraints">  {{day}}   </td>
+              <td class="table_view_constraints">   {{oneTimeConstraints[week][day]['startTime']}}  </td>
+              <td class="table_view_constraints">  {{oneTimeConstraints[week][day]['endTime']}}  </td>
               <td><input type="submit" name="{{'%s,%s'%(week,day)}}" value="Remove"></td>
               <td><input type="submit" name="{{'%s,%s'%(week,day)}}" value="Generate"></td>
             </tr>

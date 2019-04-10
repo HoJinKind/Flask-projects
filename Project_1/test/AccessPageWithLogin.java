@@ -27,10 +27,9 @@ public class AccessPageWithLogin {
 	  
 	  @Test
 	  public void testAccessHomePageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -43,16 +42,15 @@ public class AccessPageWithLogin {
 
 			Thread.sleep(3000);
 			
-		    driver.get("http://127.0.0.1:5000/home");
+		    driver.get("http://35.198.199.181:5000/home");
 		    assertEquals ("home", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessRoomPageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -65,16 +63,15 @@ public class AccessPageWithLogin {
 
 			Thread.sleep(3000);
 			
-		    driver.get("http://127.0.0.1:5000/room");
+		    driver.get("http://35.198.199.181:5000/room");
 		    assertEquals ("room", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessGeneratePageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -87,16 +84,15 @@ public class AccessPageWithLogin {
 
 			Thread.sleep(3000);
 			
-		    driver.get("http://127.0.0.1:5000/generate");
+		    driver.get("http://35.198.199.181:5000/generate");
 		    assertEquals ("generate", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraintsPageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -109,16 +105,15 @@ public class AccessPageWithLogin {
 
 			Thread.sleep(3000);
 			
-		    driver.get("http://127.0.0.1:5000/constraints");
+		    driver.get("http://35.198.199.181:5000/constraints");
 		    assertEquals ("constraints", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraint_ProfPageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -130,16 +125,15 @@ public class AccessPageWithLogin {
 		    
 
 			Thread.sleep(3000);
-	    driver.get("http://127.0.0.1:5000/constraint_Prof");
+	    driver.get("http://35.198.199.181:5000/constraint_Prof");
 	    assertEquals ("Prof/ Weekly constraints", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraint_OnePageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -151,16 +145,15 @@ public class AccessPageWithLogin {
 		    
 
 			Thread.sleep(3000);
-	    driver.get("http://127.0.0.1:5000/constraint_OneTime");
+	    driver.get("http://35.198.199.181:5000/constraint_OneTime");
 	    assertEquals ("Onetime constraints", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraint_ViewWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -172,16 +165,15 @@ public class AccessPageWithLogin {
 		    
 
 			Thread.sleep(3000);
-	    driver.get("http://127.0.0.1:5000/constraints_View");
+	    driver.get("http://35.198.199.181:5000/constraints_View");
 	    assertEquals ("constraints_View", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessViewPageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
@@ -194,7 +186,7 @@ public class AccessPageWithLogin {
 
 			Thread.sleep(3000);
 			
-		    driver.get("http://127.0.0.1:5000/view");
+		    driver.get("http://35.198.199.181:5000/view");
 		    assertEquals ("view", driver.getTitle());
 	  }
 	  

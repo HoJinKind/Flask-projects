@@ -26,50 +26,50 @@ public class AccessPageWithoutLogin {
 	  
 	  @Test
 	  public void testAccessHomePageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/home");
+	    driver.get("http://35.198.199.181:5000/home");
 	    assertEquals ("home", driver.getTitle()); 
 	  }
 	  
 	  @Test
 	  public void testAccessRoomPageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/room");
+	    driver.get("http://35.198.199.181:5000/room");
 	    assertEquals ("room", driver.getTitle()); 
 	  }
 	  
 	  @Test
 	  public void testAccessGaneratePageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/generate");
+	    driver.get("http://35.198.199.181:5000/generate");
 	    assertEquals ("generate", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraintsPageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/constraints");
+	    driver.get("http://35.198.199.181:5000/constraints");
 	    assertEquals ("constraints", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraint_ProfPageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/constraint_Prof");
+	    driver.get("http://35.198.199.181:5000/constraint_Prof");
 	    assertEquals ("Prof/ Weekly constraints", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraint_OnePageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/constraint_OneTime");
+	    driver.get("http://35.198.199.181:5000/constraint_OneTime");
 	    assertEquals ("Onetime constraints", driver.getTitle());
 	  }
 	  
 	  @Test
 	  public void testAccessConstraint_ViewWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/constraints_View");
+	    driver.get("http://35.198.199.181:5000/constraints_View");
 	    assertEquals ("constraints_View", driver.getTitle());
 	  }
 	  
 	  
 	  @Test
 	  public void testAccessViewPageWithoutLogin() throws Exception {
-	    driver.get("http://127.0.0.1:5000/view");
+	    driver.get("http://35.198.199.181:5000/view");
 	    assertEquals ("view", driver.getTitle());
 	  }
 	  

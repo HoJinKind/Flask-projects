@@ -2,11 +2,10 @@ package Project;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -30,10 +29,9 @@ public class AccessPagesWithLogin {
 	  
 	  @Test
 	  public void testAccessHomePageWithLogin() throws Exception {
-		  driver.get("http://127.0.0.1:5000/");
 		  	String user = "tom";
 			String pwd= "sutd1234";
-		    driver.get("http://127.0.0.1:5000/");
+		    driver.get("http://35.198.199.181:5000/");
 		    driver.findElement(By.name("username")).click();
 		    driver.findElement(By.name("username")).clear();
 		    driver.findElement(By.name("username")).sendKeys(user);
