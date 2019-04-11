@@ -76,13 +76,20 @@
         <th class="table_sessions">Location</th>
         <th class="table_sessions">Subject</th>
     </tr>
-    <tr><td class="table_sessions"> - </td>
-        <td class="table_sessions"> - </td>
-        <td class="table_sessions"> - </td>
-        <td class="table_sessions"> - </td>
-        <td class="table_sessions"> - </td>
-        <td class="table_sessions"> - </td>
+    {% set cnt = [0] %}
+    {%for name,prof in ls_sessions.items()%}
+
+    {%for key,session in prof.items()%}
+    {% if cnt.append(cnt.pop() + 1) %}{% endif %} 
+    <tr><td class="table_sessions"> {{ cnt[0] }} </td>
+        <td class="table_sessions"> {{name}} </td>
+        <td class="table_sessions"> {{session['cohorts']|string}} </td>
+        <td class="table_sessions"> {{(session['duration'])}} </td>
+        <td class="table_sessions"> {{(session['location'])}} </td>
+        <td class="table_sessions"> {{session['subject']}}   </td>
       </tr>
+      {%endfor%}
+      {%endfor%}
   </table>
   </center>
 

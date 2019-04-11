@@ -38,7 +38,12 @@ def home():
 def sessions():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
-    return render_template('sessions.html', title='Sessions')
+    ls_chromosomes = readwritefromFB.readfromfb()
+    ls_sessions={}
+    for prof in ls_chromosomes:
+        ls_sessions[prof.id]=prof.to_dict()
+        print(prof.to_dict())
+    return render_template('sessions.html', title='Sessions', ls_sessions = ls_sessions)
 
 @app.route("/room", methods=['GET','POST'])
 def room():
