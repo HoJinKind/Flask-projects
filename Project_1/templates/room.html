@@ -5,24 +5,40 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
   <title>room</title>
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+  $(document).ready(function(){
+  $("#id_roomName").bind("blur", function(){
+  var roomNameVal = $("#id_roomName").val();
+  var reg = /[0-9]\.[0-9][0-9][0-9]$/;
+  if(reg.test(roomNameVal)){
+  }else{
+  alert("This is a invalid format.");
+  window.location.href = "room";
+  }
+
+});
+});
+  </script>
   <style>
-  table{
-    width: 400px;
-    border-collapse: collapse;
-    text-align: center;
-  }
-  .table_view_room{
-    border : 1px solid black;
-  }
-  .room_space{
-    height : 120px;
-  }
+  table{ width: 400px; border-collapse: collapse; text-align: center; }
+  .table_view_room{border : 1px solid black;}
+  .room_space{height : 120px;}
+  .nav_menu{ display:flex; flex-direction: row; position:relative; left:50%;}
   </style>
 </head>
 <body>
   <main>
+  <header>
   <nav>
    <ul class="nav_menu">
+     <li>
+        <a href="sessions" class="menu-tap">
+          <div class="menu-tap_wrap">
+           Sessions
+         </div>
+        </a>
+    </li>
      <li>
       <a href="room" class="menu-tap menu-tap--selected">
         <div class="menu-tap_wrap">
@@ -38,11 +54,11 @@
        </a>
     </li>
     <li>
-      <a href="constraints" class="menu-tap">
+      <a href="constraints" class="menu-tap" id="id_constraints">
       <div class="menu-tap_wrap">
       Constraints
       </div>
-      </a>
+    </a>
     </li>
     <li>
       <a href="view" class="menu-tap">
@@ -57,6 +73,7 @@
   </li>
 </ul>
   </nav>
+</header>
   <div class="logo">
     Room
   </div>
@@ -70,7 +87,7 @@
       <td><div class="room_add" action ="">
         <form method="POST">
           <table>
-          <tr><td>Room Name </td> <td><input name="roomName" type="text"></td></tr>
+          <tr><td>Room Name </td><td><input name="roomName" type="text" id = "id_roomName"></td></tr>
           <tr><td>Room Type </td><td><select name="roomType" required>
 
           <option value="lt">lt

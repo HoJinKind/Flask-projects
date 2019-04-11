@@ -5,11 +5,19 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <title>Onetime constraints</title>
+  <style>.nav_menu{ display:flex; flex-direction: row; position:relative; left:50%;}</style>
 </head>
 <body>
   <main>
   <nav>
    <ul class="nav_menu">
+     <li>
+        <a href="sessions" class="menu-tap">
+          <div class="menu-tap_wrap">
+           Sessions
+         </div>
+        </a>
+    </li>
       <li>
           <a href="room" class="menu-tap">
             <div class="menu-tap_wrap">
@@ -53,7 +61,7 @@
   <form method="POST">
     <table>
       <tr><td>Event Name </td> <td><input name ="eventName" type="text" required></td></tr>
-      <tr><td>WeekNo</td> <td><input name ="weekNo" type="number" required></td></tr>
+      <tr><td>WeekNo</td> <td><input name ="weekNo" type="number" min="1" max="14" required></td></tr>
       <tr><td>Day Of Week</td> <td><select name="dayOfWeek">
         <option value="monday">monday
         <option value="tuesday">tuesday
@@ -63,7 +71,7 @@
         </select></td></tr>
       <tr><td>Start Time</td><td><input  name="startTime" type="time" min="08:30:00" max="18:00:00" step="1800" required></td></tr>
       <tr><td>End Time</td><td><input name="endTime" type="time" min="08:30:00" max="18:00:00" step="1800" required></td></tr>
-      <tr><td></td><td><input type="submit" name="submit_constraints" value="submit"></td>
+      <tr><td></td><td><input type="submit" value="submit"></td>
     </table>
     </form>
   </center>

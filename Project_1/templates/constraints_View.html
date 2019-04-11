@@ -12,14 +12,10 @@
   <title>constraints_View</title>
   <style>
   table{width:100%}
-  th,td{
-    border : 1px solid black;
-  }
-  th,td{
-    padding:5px;
-    text-align: center;
-  }
+  th,td{border : 1px solid black;}
+  th,td{padding:5px;text-align: center;}
   #generate_button_constraints{float: right; margin-right: 65px; height:70px;}
+  .nav_menu{ display:flex; flex-direction: row; position:relative; left:50%;}
   </style>
 </head>
 <body>
@@ -28,6 +24,13 @@
   <form method="POST" action ="">
   <nav>
    <ul class="nav_menu">
+     <li>
+        <a href="sessions" class="menu-tap">
+          <div class="menu-tap_wrap">
+           Sessions
+         </div>
+        </a>
+    </li>
       <li>
           <a href="room" class="menu-tap">
             <div class="menu-tap_wrap">

@@ -5,11 +5,21 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
   <title>home</title>
+  <style>
+  .nav_menu{ display:flex; flex-direction: row; position:relative; left:50%;}
+  </style>
 </head>
 <body>
   <main>
   <nav>
    <ul class="nav_menu">
+     <li>
+        <a href="sessions" class="menu-tap">
+          <div class="menu-tap_wrap">
+           Sessions
+         </div>
+        </a>
+    </li>
       <li>
           <a href="room" class="menu-tap">
             <div class="menu-tap_wrap">
@@ -44,11 +54,21 @@
   </li>
 </ul>
   </nav>
+  <div class="space_logo"><div>
   <div class="logo">
     eGenda
   </div>
   <center>
   <section class="functions">
+    <div class="function">
+        <a  href="sessions" class="function-tap">
+            <div class="function_icon">
+              <span class="fas fa-table"></span>
+            </div>
+          <span class="function_text">Sessions</span><br>
+          <span>View sessions</span>
+        </a>
+      </div>
       <div class="function">
           <a  href="room" class="function-tap">
               <div class="function_icon">
@@ -82,7 +102,7 @@
         <span class="fas fa-eye"></span>
         </div>
           <span class="function_text">View</span><br>
-          <span>View TimeTable Generated</span>
+          <span>View TimeTable</span>
       </a>
     </div>
   </section>

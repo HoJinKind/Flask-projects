@@ -34,6 +34,11 @@ def home():
 
     return render_template('home.html', title='Home')
 
+@app.route("/sessions", methods=['GET','POST'])
+def sessions():
+    if not session['loggedIn']== True:
+        return redirect(url_for('login'))
+    return render_template('sessions.html', title='Sessions')
 
 @app.route("/room", methods=['GET','POST'])
 def room():
@@ -76,6 +81,7 @@ def constraints():
     if not session['loggedIn']== True:
         return redirect(url_for('login'))
     return render_template('constraints.html', title='Constraints')
+
 
 
 @app.route("/constraint_OneTime", methods=['GET','POST'])
@@ -125,7 +131,7 @@ def modify_public():
             print('failed')
             return render_template('constraint_Prof.html', title='Constraint_Prof')
         dataDict =[profName,{DayOfWeek:{'startTime':unicode(str(int(st)), "utf-8"),'duration':unicode(str(int(duration)), "utf-8")}}]
-        readwritefromFB.appendToProfConstraint(dataDict) 
+        readwritefromFB.appendToProfConstraint(dataDict)
         return redirect(url_for('constraints_view'))
     return render_template('constraint_Prof.html', title='Constraint_Prof')
 
@@ -138,7 +144,7 @@ def constraints_view():
     for prof in profConstraints:
         for day in profConstraints[prof]:
             profConstraints[prof][day]['startTime'],profConstraints[prof][day]['endTime']=convertTimeUnitsToRealTime(profConstraints[prof][day])
-    
+
         #convert time to date time
     oneTimeConstraints=readwritefromFB.readfromfbOneTimeConstraints()
     for week in oneTimeConstraints:
@@ -146,11 +152,11 @@ def constraints_view():
             oneTimeConstraints[week][day]['startTime'],oneTimeConstraints[week][day]['endTime']=convertTimeUnitsToRealTime(oneTimeConstraints[week][day])
     genericConstraints,hassConstraints= readwritefromFB.readHassAndWeeklyConstraints()
     lsHardConstraints=[]
-    for day in hassConstraints:    
+    for day in hassConstraints:
         tempdict={'event':'hass','day':day}
         tempdict['startTime'],tempdict['endTime']= convertTimeUnitsToRealTime(hassConstraints[day])
         lsHardConstraints.append(tempdict)
-    for day in genericConstraints:    
+    for day in genericConstraints:
         tempdict={'event':'generic','day':day}
         tempdict['startTime'],tempdict['endTime']= convertTimeUnitsToRealTime(genericConstraints[day])
         lsHardConstraints.append(tempdict)
@@ -186,7 +192,7 @@ def constraints_view():
                         #dosmth] == 'Generate':
                         #dosmth
                         return redirect(url_for('view'))
-                    
+
     return render_template('constraints_View.html', title='Constraint_View', profConstraints=profConstraints,oneTimeConstraints=oneTimeConstraints,hardConstraints=lsHardConstraints)
 
 @app.route("/view", methods=['GET','POST'])
