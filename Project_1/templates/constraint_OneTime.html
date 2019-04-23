@@ -60,7 +60,7 @@
   <span class="login_text">Add One Time Constraint</span>
   <form method="POST">
     <table>
-      <tr><td>Event Name </td> <td><input name ="eventName" type="text" required></td></tr>
+      <tr><td>Event Name </td> <td><input name ="eventName" type="text" maxlength="1000" required></td></tr>
       <tr><td>WeekNo</td> <td><input name ="weekNo" type="number" min="1" max="14" required></td></tr>
       <tr><td>Day Of Week</td> <td><select name="dayOfWeek">
         <option value="monday">monday
@@ -76,8 +76,6 @@
     </form>
   </center>
 </section>
-  </main>
-
     <footer>
       <center>
         <p class="space_footer"></p>

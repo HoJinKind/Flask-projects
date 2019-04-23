@@ -13,8 +13,8 @@
   var reg = /[0-9]\.[0-9][0-9][0-9]$/;
   if(reg.test(roomNameVal)){
   }else{
+  document.getElementById('id_roomName').value="";
   alert("This is a invalid format.");
-  window.location.href = "room";
   }
 
 });

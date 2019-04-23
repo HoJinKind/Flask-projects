@@ -80,7 +80,7 @@
     {%for name,prof in ls_sessions.items()%}
 
     {%for key,session in prof.items()%}
-    {% if cnt.append(cnt.pop() + 1) %}{% endif %} 
+    {% if cnt.append(cnt.pop() + 1) %}{% endif %}
     <tr><td class="table_sessions"> {{ cnt[0] }} </td>
         <td class="table_sessions"> {{name}} </td>
         <td class="table_sessions"> {{session['cohorts']|string}} </td>
@@ -92,13 +92,9 @@
       {%endfor%}
   </table>
   </center>
-
-
-  </main>
-
     <footer>
       <center>
-        <p class="space_footer"></p>
+      <p class="space_footer"></p>
       <hr>
       &copy; eGenda 2019
     </center>
