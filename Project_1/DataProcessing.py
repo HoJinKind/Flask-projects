@@ -30,13 +30,19 @@ def convertSessionToStrings(dictionary_day_class_list):
                 if type(temp_dict) == dict :
                     tempstr= ""
                     #convert to str, take name
-                    tempstr=tempstr +'cohorts:' +str(temp_dict[u'cohortID'])
-
-                    tempstr=tempstr +'  profs:' +str(temp_dict[u'profs'])
-                    tempstr=tempstr +'  subject:' +str(temp_dict[u'subject'])
+                    tempstr=tempstr +'Cohorts:' 
+                    tempstr= commaSep(tempstr,temp_dict[u'cohortID'])
+                    
+                    tempstr=tempstr +' Professors:' 
+                    tempstr= commaSep(tempstr,temp_dict[u'profs'])
+                    tempstr=tempstr +'  Subject:' +str(temp_dict[u'subject'])
                     dictionary_day_class_list[day][classroom][timeSlot]=tempstr
     return dictionary_day_class_list
-
+def commaSep(tempStr,cohorts):
+    for cohort in range(len(cohorts)-1):
+        tempStr = tempStr + cohorts[cohort]+ ', '
+    tempStr = tempStr+cohorts[len(cohorts)-1]+' '
+    return tempStr
 def convertPandasToHTML(ls_timeTable_in_pdframe):
     room_example_html_list=[]
     for room_example in ls_timeTable_in_pdframe:
