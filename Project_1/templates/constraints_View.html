@@ -140,10 +140,10 @@
         {%for prof in profConstraints%}
         {%for dayOfWeek in profConstraints[prof]%}
           <tr>
-            <td>{{prof}}</td>
-            <td>{{dayOfWeek }}</td>
-            <td>   {{profConstraints[prof][dayOfWeek]['startTime']}} </td>
-            <td> {{profConstraints[prof][dayOfWeek]['endTime']}} </td>
+            <td class="table_view_constraints2">{{prof}}</td>
+            <td class="table_view_constraints2">{{dayOfWeek }}</td>
+            <td class="table_view_constraints2">   {{profConstraints[prof][dayOfWeek]['startTime']}} </td>
+            <td class="table_view_constraints2"> {{profConstraints[prof][dayOfWeek]['endTime']}} </td>
             <td><input type="submit" name="{{'%s,%s'%(prof,dayOfWeek)}}" value="Remove"></td>
           </tr>
         {%endfor%}
