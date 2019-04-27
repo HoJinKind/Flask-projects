@@ -1,6 +1,7 @@
 package Project;
 
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -12,6 +13,20 @@ public class Login_failed_InvalidInput {
   private WebDriver driver;
  
   private StringBuffer verificationErrors = new StringBuffer();
+  public String random_fuzzer() {
+	  Random random = new Random();
+	  StringBuilder builder = new StringBuilder();
+	  int length = random.nextInt(99)+1;
+	  for(int i = 0; i<length;i++) {
+		  int n = random.nextInt(94)+33;
+		  char s;
+		  s=(char) n;
+		  System.out.println(s);
+		  builder.append(s);
+		  
+	  }
+	  return builder.toString();
+  }
 
   @Before
   public void setUp() throws Exception {
@@ -22,9 +37,9 @@ public class Login_failed_InvalidInput {
 
   
   @Test
-  public void testNotValidInput() throws Exception {
-	String user = "tomtom";
-	String pwd= "sutd124";
+  public void testInvalidInput() throws Exception {
+	String user = random_fuzzer();
+	String pwd= random_fuzzer();
     driver.get("http://35.198.199.181:5000/");
     driver.findElement(By.name("username")).click();
     driver.findElement(By.name("username")).clear();
