@@ -11,6 +11,10 @@ Features:
 * View timetables
 check out the website [here](http://35.198.199.181:5000/)
 
+Team Members/Role: 
+* Back-end dev - [Ainul Mardhiyyah](https://github.com/Ainul-MdRazib/)
+* Front-end dev - [Khai Sheen](github.com/khaisheen)
+* Web devs - [Jin Kind](https://github.com/HoJinKind/), [Seungeun](https://github.com/leese1016)
 </br >
  <img src="https://github.com/HoJinKind/Flask-projects/blob/master/images/Screenshot%20(167).png" alt="alt text"  img width="425"/>   <img src="https://github.com/HoJinKind/Flask-projects/blob/master/images/Screenshot%20(168).png" alt="alt text"  img width="425"/> 
  <img src="https://github.com/HoJinKind/Flask-projects/blob/master/images/Screenshot%20(169).png" alt="alt text"  img width="425"/> 
