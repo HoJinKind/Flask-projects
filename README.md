@@ -1,6 +1,6 @@
 # Egenda 
 
-## Timetable scheduler on a university level; made easy
+## Timetable scheduler on a university level, made easy
 Made using flask, along with [mobile app](https://github.com/Ainul-MdRazib/SUTD-eGenda)
 Features:
 * input of classes by professors.
