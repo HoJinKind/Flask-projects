@@ -9,7 +9,7 @@ Features:
 * second iteration, with modification on prof constraints
 * Generate timetables for public holiday weeks/ Important events
 * View timetables</br>
-check out the website [here](http://35.198.199.181:5000/)
+check out the website [here](http://35.198.199.181:5000/), [user:tom, password: sutd1234]
 
 Team Members/Role: 
 * Back-end dev/Algorithm - [Jin Kind](https://github.com/HoJinKind/)
