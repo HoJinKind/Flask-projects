@@ -1,6 +1,14 @@
 # Egenda 
 
 ## Timetable scheduler on a university level; made easy
+Made using flask, along with [mobile app](https://github.com/Ainul-MdRazib/SUTD-eGenda)
+Features:
+* input of classes by professors.
+* Adding of rooms 
+* generate first iteration of timetable, this takes into account professor constraints, rooms, and students
+* second iteration, with modification on prof constraints
+* Generate timetables for public holiday weeks/ Important events
+* 
 
 </br >
  <img src="https://github.com/HoJinKind/Flask-projects/blob/master/images/Screenshot%20(167).png" alt="alt text"  img width="425"/>   <img src="https://github.com/HoJinKind/Flask-projects/blob/master/images/Screenshot%20(168).png" alt="alt text"  img width="425"/> 
