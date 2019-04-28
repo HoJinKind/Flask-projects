@@ -8,8 +8,9 @@ Features:
 * generate first iteration of timetable, this takes into account professor constraints, rooms, and students
 * second iteration, with modification on prof constraints
 * Generate timetables for public holiday weeks/ Important events
-* View timetables</br></br>
-check out the website [here](http://35.198.199.181:5000/), [user:tom, password: sutd1234]
+* View timetables</br>
+
+Check out the website [here](http://35.198.199.181:5000/), [user:tom, password: sutd1234]
 
 Team Members/Role: 
 * Back-end dev/Algorithm - [Jin Kind](https://github.com/HoJinKind/)
