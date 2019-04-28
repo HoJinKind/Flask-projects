@@ -1,1 +1,2 @@
-# Egenda: Timetable scheduler on a university level; made easy
+# Egenda 
+##Timetable scheduler on a university level; made easy
